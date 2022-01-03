@@ -33,6 +33,7 @@
     "express": "^4.17.2",
     "mongoose": "^6.1.4",
     "pino": "^7.6.2",
-    "pino-pretty": "^7.3.0"
+    "pino-pretty": "^7.3.0",
+    "zod": "^3.11.6"
   }
 }
