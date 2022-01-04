@@ -1,8 +1,14 @@
 import logger from "pino";
 import dayjs from "dayjs";
+import config from "config";
+
+const level = config.get<string>("logLevel");
 
 const log = logger({
-  prettyPrint: true,
+  transport: {
+    target: "pino-pretty",
+  },
+  level,
   base: {
     pid: false,
   },

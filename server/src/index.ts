@@ -3,8 +3,7 @@ import "dotenv/config";
 import config from "config";
 import connectDB from "./utils/db";
 import logger from "./utils/logger";
-
-import userRouter from "./routes/users";
+import userRouter from "./routes/user.route";
 
 const app = express();
 app.use(express.json());
@@ -15,7 +14,8 @@ app.get("/healthcheck", (_req, res) => {
   res.status(200).send("OK");
 });
 
-app.use("/api/users", userRouter);
+// all routes prefixed with /api
+app.use("/api/user", userRouter);
 
 // eslint-disable-next-line @typescript-eslint/no-misused-promises
 app.listen(port, async () => {
