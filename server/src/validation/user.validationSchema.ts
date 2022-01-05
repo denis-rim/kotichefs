@@ -26,4 +26,12 @@ export const createUserInputSchema = object({
   }),
 });
 
+export const verificationUserSchema = object({
+  params: object({
+    id: string(),
+    verificationString: string(),
+  }),
+});
+
 export type CreateUserInput = TypeOf<typeof createUserInputSchema>["body"];
+export type VerifyUserInput = TypeOf<typeof verificationUserSchema>["params"];

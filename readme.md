@@ -15,9 +15,11 @@ Server:
 - MongoDB with Mongoose
 - Zod
 - jsonwebtoken
+- bcrypt
 - Nodemailer
 - Pino
 - node-config
+- node-mailer
 
 Client:
 - TypeScript

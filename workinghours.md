@@ -9,4 +9,5 @@
 |       |  1   | server |Add validator middleware |
 | 04.01 |  4   | server |Add user model, user registration|
 | 05.01 |  4   | server |Worked on register user functionality, refactor code|
-| total |  12  | 
+|       |  2   | server |Add user email verification functionality|
+| total |  14  | 
