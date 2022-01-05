@@ -5,7 +5,9 @@ import config from "config";
 import logger from "../utils/logger";
 import { CreateUserInput } from "../validation/user.validationSchema";
 import { User } from "../models/user.model";
+import sendEmail from "../utils/mailer";
 
+// Register a new user
 export const createUserHandler = async (
   req: Request<unknown, unknown, CreateUserInput>,
   res: Response
@@ -26,6 +28,15 @@ export const createUserHandler = async (
     });
 
     await user.save();
+
+    await sendEmail({
+      from: "denis.mazurchuk@gmail.com",
+      to: user.email,
+      subject: "Please verify your email",
+      html: `
+          <p>Thanks for signing up! To verify your email, click the link below:</p>
+          <a href="http://localhost:5000/verify-email/${verificationString}">Verify Email</a>`,
+    });
 
     return res.status(201).send(user);
   } catch (err: unknown) {
