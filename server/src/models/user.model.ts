@@ -27,7 +27,8 @@ export interface UserDocument extends mongoose.Document {
   email: string;
   password: string;
   address: string;
-  confirmHash: string;
+  verificationString: string;
+  salt: string;
   photo_url: string;
   role: UserRole;
   orders: string[];
@@ -37,9 +38,9 @@ export interface UserDocument extends mongoose.Document {
   about: string;
   phone: string;
   rating: number;
+  verified: boolean;
   createdAt: Date;
   updatedAt: Date;
-  __v: number;
 }
 
 export type PublicUser = Pick<
@@ -53,13 +54,6 @@ export type PublicUser = Pick<
   | "cuisine"
   | "menu"
 >;
-
-// TODO: find another way to do this
-export interface SafeUser extends PublicUser {
-  password?: string;
-  confirmHash?: string;
-  __v?: number;
-}
 
 const UserSchema = new Schema<UserDocument>(
   {
@@ -81,9 +75,13 @@ const UserSchema = new Schema<UserDocument>(
       type: String,
       required: true,
     },
-    confirmHash: {
+    verificationString: {
       type: String,
-      // required: true,
+      default: "",
+    },
+    salt: {
+      type: String,
+      default: "",
     },
     photo_url: {
       type: String,
@@ -122,6 +120,10 @@ const UserSchema = new Schema<UserDocument>(
       type: Number,
       default: 0,
     },
+    verified: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     timestamps: true,
@@ -129,12 +131,13 @@ const UserSchema = new Schema<UserDocument>(
 );
 
 UserSchema.set("toJSON", {
-  transform: (_, returnedObject: SafeUser) => {
+  transform: (_, returnedObject: Partial<UserDocument>) => {
     delete returnedObject.password;
-    delete returnedObject.confirmHash;
+    delete returnedObject.verificationString;
+    delete returnedObject.salt;
     delete returnedObject.__v;
     return returnedObject;
   },
 });
 
-export const UserModel = model<UserDocument>("User", UserSchema);
+export const User = model<UserDocument>("User", UserSchema);

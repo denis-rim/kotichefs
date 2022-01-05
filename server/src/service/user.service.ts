@@ -1,10 +1,12 @@
-import { UserModel } from "../models/user.model";
+import { User } from "../models/user.model";
 import { CreateUserInput } from "../validation/user.validationSchema";
 
-export async function createUser(input: CreateUserInput["body"]) {
+export async function createUser(input: CreateUserInput) {
   try {
-    return await UserModel.create(input);
+    return await User.create(input);
+    // eslint-disable-next-line
   } catch (err: any) {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     throw new Error(err);
   }
 }

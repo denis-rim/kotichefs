@@ -8,4 +8,5 @@
 | 03.01 |  1   | server |Add logger |
 |       |  1   | server |Add validator middleware |
 | 04.01 |  4   | server |Add user model, user registration|
-| total |  8  | 
+| 05.01 |  4   | server |Worked on register user functionality, refactor code|
+| total |  12  | 
