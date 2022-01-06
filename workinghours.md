@@ -10,4 +10,5 @@
 | 04.01 |  4   | server |Add user model, user registration|
 | 05.01 |  4   | server |Worked on register user functionality, refactor code|
 |       |  2   | server |Add user email verification functionality|
-| total |  14  | 
+| 06.01 |  4   | server |Add forget password and reset password functionality|
+| total |  18  | 

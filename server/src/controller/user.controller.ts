@@ -5,18 +5,21 @@ import config from "config";
 import logger from "../utils/logger";
 import {
   CreateUserInput,
+  ForgotPasswordInput,
+  ResetPasswordInput,
   VerifyUserInput,
 } from "../validation/user.validationSchema";
 import { User } from "../models/user.model";
 import sendEmail from "../utils/mailer";
 
 // Register a new user
-export const createUserHandler = async (
+export async function createUserHandler(
   req: Request<unknown, unknown, CreateUserInput>,
   res: Response
-) => {
+) {
   const body = req.body;
   try {
+    // Add more security salt and pepper to the password
     const salt = uuid();
     const pepper = config.get<string>("pepper");
     const verificationString = uuid();
@@ -33,7 +36,7 @@ export const createUserHandler = async (
     await user.save();
 
     await sendEmail({
-      from: "denis.mazurchuk@gmail.com",
+      from: "noreply@kotichefs.com",
       to: user.email,
       subject: "Please verify your email",
       html: `
@@ -58,13 +61,13 @@ export const createUserHandler = async (
 
     return res.status(500).send(errorMessage);
   }
-};
+}
 
 // Verify user email
-export const verifyEmailHandler = async (
+export async function verifyEmailHandler(
   req: Request<VerifyUserInput>,
   res: Response
-) => {
+) {
   const { id, verificationString } = req.params;
 
   try {
@@ -103,4 +106,78 @@ export const verifyEmailHandler = async (
 
     return res.status(500).send(errorMessage);
   }
-};
+}
+
+// Reset user password
+export async function forgotPasswordHandler(
+  req: Request<unknown, unknown, ForgotPasswordInput>,
+  res: Response
+) {
+  const { email } = req.body;
+
+  // Generate new password reset code
+  const passwordResetCode = uuid();
+
+  // Find user by email
+  const user = await User.findOneAndUpdate(
+    { email },
+    { $set: { passwordResetCode } },
+    { new: true }
+  );
+
+  if (!user) {
+    // Send a 200 status NO MATTER WHAT (unless there's an internal error) - this makes it hard to fish around for emails
+    return res.sendStatus(200);
+  }
+
+  // Send email with link to reset password
+  await sendEmail({
+    from: "noreply@kotichefs.com",
+    to: user.email,
+    subject: "Reset password",
+    html: `
+          <p>To reset password, click the link below:</p>
+<!--           TODO: Change this to a proper link once we have a proper frontend-->
+          <a href="http://localhost:5000/api/user/reset-password/${passwordResetCode}">Reset password</a>`,
+  });
+
+  // Send a 200 status NO MATTER WHAT (unless there's an internal error) - this makes it hard to fish around for emails
+  return res.sendStatus(200);
+}
+
+export async function resetPasswordHandler(
+  req: Request<
+    ResetPasswordInput["params"],
+    unknown,
+    ResetPasswordInput["body"]
+  >,
+  res: Response
+) {
+  const { passwordResetCode } = req.params;
+  const { password } = req.body;
+
+  // Find user by password reset code
+  const user = await User.findOne({ passwordResetCode });
+
+  if (
+    !user ||
+    user.passwordResetCode === "" ||
+    user.passwordResetCode !== passwordResetCode
+  ) {
+    return res.status(404).send("Could not reset password");
+  }
+
+  // Hash new password
+  const salt = uuid();
+  const pepper = config.get<string>("pepper");
+  const passwordHash = await bcrypt.hash(salt + password + pepper, 10);
+
+  // Update user
+  user.password = passwordHash;
+  user.salt = salt;
+  user.passwordResetCode = "";
+
+  await user.save();
+
+  return res.status(200).send("Password successfully reset");
+}

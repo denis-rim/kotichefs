@@ -26,6 +26,7 @@ export interface UserDocument extends mongoose.Document {
   fullName: string;
   email: string;
   password: string;
+  passwordResetCode: string;
   address: string;
   verificationString: string;
   salt: string;
@@ -67,13 +68,17 @@ const UserSchema = new Schema<UserDocument>(
       required: true,
     },
     email: {
+      type: String,
       unique: true,
       required: true,
-      type: String,
+      index: true,
     },
     password: {
       type: String,
       required: true,
+    },
+    passwordResetCode: {
+      type: String,
     },
     verificationString: {
       type: String,
