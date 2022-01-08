@@ -11,4 +11,5 @@
 | 05.01 |  4   | server |Worked on register user functionality, refactor code|
 |       |  2   | server |Add user email verification functionality|
 | 06.01 |  4   | server |Add forget password and reset password functionality|
-| total |  18  | 
+| 07.01 |  6   | server |Refactor, improves, add auth and session|
+| total |  24  | 

@@ -1,4 +1,5 @@
 import mongoose, { model, Schema } from "mongoose";
+import bcrypt from "bcrypt";
 
 export enum Cuisine {
   Finnish = "finnish",
@@ -25,7 +26,7 @@ export interface UserDocument extends mongoose.Document {
   username: string;
   fullName: string;
   email: string;
-  password: string;
+  passwordHash: string;
   passwordResetCode: string;
   address: string;
   verificationString: string;
@@ -42,6 +43,7 @@ export interface UserDocument extends mongoose.Document {
   verified: boolean;
   createdAt: Date;
   updatedAt: Date;
+  validatePassword(candidatePassword: string): Promise<boolean>;
 }
 
 export type PublicUser = Pick<
@@ -56,7 +58,7 @@ export type PublicUser = Pick<
   | "menu"
 >;
 
-const UserSchema = new Schema<UserDocument>(
+const userSchema = new Schema<UserDocument>(
   {
     username: {
       type: String,
@@ -73,7 +75,7 @@ const UserSchema = new Schema<UserDocument>(
       required: true,
       index: true,
     },
-    password: {
+    passwordHash: {
       type: String,
       required: true,
     },
@@ -135,9 +137,22 @@ const UserSchema = new Schema<UserDocument>(
   }
 );
 
-UserSchema.set("toJSON", {
+userSchema.methods.validatePassword = async function (
+  candidatePassword: string
+): Promise<boolean> {
+  const user = this as UserDocument;
+
+  return (
+    bcrypt
+      .compare(candidatePassword, user.passwordHash)
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      .catch((e: unknown) => false)
+  );
+};
+
+userSchema.set("toJSON", {
   transform: (_, returnedObject: Partial<UserDocument>) => {
-    delete returnedObject.password;
+    delete returnedObject.passwordHash;
     delete returnedObject.verificationString;
     delete returnedObject.salt;
     delete returnedObject.__v;
@@ -145,4 +160,4 @@ UserSchema.set("toJSON", {
   },
 });
 
-export const User = model<UserDocument>("User", UserSchema);
+export const UserModel = model<UserDocument>("User", userSchema);

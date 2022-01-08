@@ -1,5 +1,6 @@
+// eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-var-requires
+require("dotenv").config();
 import express from "express";
-import "dotenv/config";
 import config from "config";
 import connectDB from "./utils/db";
 import logger from "./utils/logger";
@@ -18,8 +19,27 @@ const port = config.get<number>("port");
 // all routes prefixed with /api
 app.use("/api", router);
 
-app.listen(port, () => {
-  logger.info(`Server running on port ${port}`);
+async function start() {
+  try {
+    await connectDB();
+    app.listen(port, () => {
+      logger.info(`Server started on port ${port}`);
+    });
+  } catch (err: unknown) {
+    let errorMessage = "Something went wrong.";
 
-  void connectDB();
-});
+    if (err instanceof Error) {
+      errorMessage += " Error: " + err.message;
+    }
+
+    logger.error(errorMessage);
+  }
+}
+
+void start();
+
+// app.listen(port, () => {
+//   logger.info(`Server running on port ${port}`);
+//
+//   void connectDB();
+// });

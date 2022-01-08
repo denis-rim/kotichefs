@@ -28,7 +28,7 @@ const transporter = nodemailer.createTransport({
 });
 
 async function sendEmail(payload: SendMailOptions) {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+  // eslint-disable-next-line @typescript-eslint/await-thenable
   await transporter.sendMail(payload, (err, info) => {
     if (err) {
       logger.error(err, "Error sending email");

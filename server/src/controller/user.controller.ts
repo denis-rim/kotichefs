@@ -9,8 +9,13 @@ import {
   ResetPasswordInput,
   VerifyUserInput,
 } from "../validation/user.validationSchema";
-import { User } from "../models/user.model";
 import sendEmail from "../utils/mailer";
+import {
+  createUser,
+  findUserByEmail,
+  findUserById,
+  findUserByResetCode,
+} from "../service/user.service";
 
 // Register a new user
 export async function createUserHandler(
@@ -26,14 +31,12 @@ export async function createUserHandler(
 
     const passwordHash = await bcrypt.hash(salt + body.password + pepper, 10);
 
-    const user = new User({
+    const user = await createUser({
       ...body,
-      password: passwordHash,
+      passwordHash,
       salt,
       verificationString,
     });
-
-    await user.save();
 
     await sendEmail({
       from: "noreply@kotichefs.com",
@@ -72,7 +75,7 @@ export async function verifyEmailHandler(
 
   try {
     // Find user by id
-    const user = await User.findById(id);
+    const user = await findUserById(id);
 
     if (!user) {
       return res.status(404).send("Could not verify user");
@@ -115,20 +118,23 @@ export async function forgotPasswordHandler(
 ) {
   const { email } = req.body;
 
-  // Generate new password reset code
-  const passwordResetCode = uuid();
-
   // Find user by email
-  const user = await User.findOneAndUpdate(
-    { email },
-    { $set: { passwordResetCode } },
-    { new: true }
-  );
+  const user = await findUserByEmail(email);
 
   if (!user) {
     // Send a 200 status NO MATTER WHAT (unless there's an internal error) - this makes it hard to fish around for emails
-    return res.sendStatus(200);
+    logger.debug(`User with email ${email} does not exists`);
+    return res.send(
+      "If a user with that email is registered you will receive a password reset email"
+    );
   }
+
+  // Generate new password reset code
+  const passwordResetCode = uuid();
+
+  user.passwordResetCode = passwordResetCode;
+
+  await user.save();
 
   // Send email with link to reset password
   await sendEmail({
@@ -142,7 +148,9 @@ export async function forgotPasswordHandler(
   });
 
   // Send a 200 status NO MATTER WHAT (unless there's an internal error) - this makes it hard to fish around for emails
-  return res.sendStatus(200);
+  return res.send(
+    "If a user with that email is registered you will receive a password reset email"
+  );
 }
 
 export async function resetPasswordHandler(
@@ -157,7 +165,7 @@ export async function resetPasswordHandler(
   const { password } = req.body;
 
   // Find user by password reset code
-  const user = await User.findOne({ passwordResetCode });
+  const user = await findUserByResetCode(passwordResetCode);
 
   if (
     !user ||
@@ -173,7 +181,7 @@ export async function resetPasswordHandler(
   const passwordHash = await bcrypt.hash(salt + password + pepper, 10);
 
   // Update user
-  user.password = passwordHash;
+  user.passwordHash = passwordHash;
   user.salt = salt;
   user.passwordResetCode = "";
 
