@@ -189,3 +189,9 @@ export async function resetPasswordHandler(
 
   return res.status(200).send("Password successfully reset");
 }
+
+export async function getCurrentUserHandler(req: Request, res: Response) {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+  const user = await findUserById(res.locals.user._id);
+  return res.status(200).send(user);
+}

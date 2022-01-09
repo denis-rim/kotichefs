@@ -1,4 +1,4 @@
-import mongoose, { model, Schema } from "mongoose";
+import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 
 export enum Cuisine {
@@ -22,7 +22,7 @@ export enum UserRole {
 }
 
 export interface UserDocument extends mongoose.Document {
-  id: string;
+  _id: string;
   username: string;
   fullName: string;
   email: string;
@@ -48,6 +48,7 @@ export interface UserDocument extends mongoose.Document {
 
 export type PublicUser = Pick<
   UserDocument,
+  | "id"
   | "username"
   | "fullName"
   | "address"
@@ -58,7 +59,7 @@ export type PublicUser = Pick<
   | "menu"
 >;
 
-const userSchema = new Schema<UserDocument>(
+const userSchema = new mongoose.Schema(
   {
     username: {
       type: String,
@@ -74,6 +75,12 @@ const userSchema = new Schema<UserDocument>(
       unique: true,
       required: true,
       index: true,
+    },
+    role: {
+      type: String,
+      default: UserRole.User,
+      required: true,
+      enum: ["admin", "user", "chef"],
     },
     passwordHash: {
       type: String,
@@ -160,4 +167,6 @@ userSchema.set("toJSON", {
   },
 });
 
-export const UserModel = model<UserDocument>("User", userSchema);
+const UserModel = mongoose.model<UserDocument>("User", userSchema);
+
+export default UserModel;

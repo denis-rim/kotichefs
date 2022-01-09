@@ -9,9 +9,11 @@ import validateResource from "../middleware/validateResource";
 import {
   createUserHandler,
   forgotPasswordHandler,
+  getCurrentUserHandler,
   resetPasswordHandler,
   verifyEmailHandler,
 } from "../controller/user.controller";
+import requireUser from "../middleware/requireUser";
 
 const router = express.Router();
 
@@ -38,5 +40,7 @@ router.post(
   validateResource(resetPasswordSchema),
   resetPasswordHandler
 );
+
+router.get("/me", requireUser, getCurrentUserHandler);
 
 export default router;

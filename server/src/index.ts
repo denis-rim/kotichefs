@@ -1,5 +1,6 @@
-// eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-var-requires
-require("dotenv").config();
+import dotenv from "dotenv";
+dotenv.config();
+import deserializeUser from "./middleware/deserializeUser";
 import express from "express";
 import config from "config";
 import connectDB from "./utils/db";
@@ -13,6 +14,9 @@ const app = express();
 app.use(express.json());
 
 const port = config.get<number>("port");
+
+// Get user from header and deserialize
+app.use(deserializeUser);
 
 // Add all the routes to our Express server
 // exported from routes/index.ts

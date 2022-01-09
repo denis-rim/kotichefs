@@ -1,4 +1,4 @@
-import { UserModel, UserDocument } from "../models/user.model";
+import UserModel,{  UserDocument } from "../models/user.model";
 
 export function createUser(input: Partial<UserDocument>) {
   return UserModel.create(input);

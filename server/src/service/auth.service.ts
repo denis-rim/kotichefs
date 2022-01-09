@@ -1,5 +1,5 @@
 import { FilterQuery, UpdateQuery } from "mongoose";
-import { SessionDocument, SessionModel } from "../models/session.model";
+import SessionModel, { SessionDocument } from "../models/session.model";
 import { UserDocument } from "../models/user.model";
 import { signJwt } from "../utils/jwt";
 
@@ -7,7 +7,7 @@ export async function createSession({ userId }: { userId: string }) {
   return await SessionModel.create({ user: userId });
 }
 
-export async function findSessions(query: FilterQuery<SessionDocument>) {
+export async function findSession(query: FilterQuery<SessionDocument>) {
   return SessionModel.find(query).lean();
 }
 
@@ -35,13 +35,15 @@ export async function signRefreshToken({ userId }: { userId: string }) {
 }
 
 export function signAccessToken(user: UserDocument) {
-  const payload = user.toJSON();
+  const { _id, username, role } = user;
 
-  // console.log("PAYLOAD: ", payload);
-
-  const accessToken = signJwt(payload, "accessTokenPrivateKey", {
-    expiresIn: "15m",
-  });
+  const accessToken = signJwt(
+    { _id, username, role },
+    "accessTokenPrivateKey",
+    {
+      expiresIn: "15m",
+    }
+  );
 
   return accessToken;
 }
