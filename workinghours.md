@@ -12,4 +12,5 @@
 |       |  2   | server |Add user email verification functionality|
 | 06.01 |  4   | server |Add forget password and reset password functionality|
 | 07.01 |  6   | server |Refactor, improves, add auth and session|
-| total |  24  | 
+| 10.01 |  3   | server |Error handling, storing user agent in session, small fixes|
+| total |  27  | 
