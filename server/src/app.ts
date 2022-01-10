@@ -41,9 +41,3 @@ async function start() {
 }
 
 void start();
-
-// app.listen(port, () => {
-//   logger.info(`Server running on port ${port}`);
-//
-//   void connectDB();
-// });

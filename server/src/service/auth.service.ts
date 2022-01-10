@@ -3,8 +3,12 @@ import SessionModel, { SessionDocument } from "../models/session.model";
 import { UserDocument } from "../models/user.model";
 import { signJwt } from "../utils/jwt";
 
-export async function createSession({ userId }: { userId: string }) {
-  return await SessionModel.create({ user: userId });
+export async function createSession(userId: string, userAgent: string) {
+  const session = await SessionModel.create({
+    user: userId,
+    userAgent,
+  });
+  return session.toJSON();
 }
 
 export async function findSession(query: FilterQuery<SessionDocument>) {
@@ -18,8 +22,8 @@ export async function updateSession(
   return SessionModel.updateOne(query, update);
 }
 
-export async function signRefreshToken({ userId }: { userId: string }) {
-  const session = await createSession({ userId });
+export async function signRefreshToken(userId: string, userAgent: string) {
+  const session = await createSession(userId, userAgent);
 
   const refreshToken = signJwt(
     {

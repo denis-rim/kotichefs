@@ -61,83 +61,33 @@ export type PublicUser = Pick<
 
 const userSchema = new mongoose.Schema(
   {
-    username: {
-      type: String,
-      required: true,
-      unique: true,
-    },
-    fullName: {
-      type: String,
-      required: true,
-    },
-    email: {
-      type: String,
-      unique: true,
-      required: true,
-      index: true,
-    },
+    username: { type: String, required: true, unique: true },
+    fullName: { type: String, required: true },
+    email: { type: String, required: true, unique: true, index: true },
     role: {
       type: String,
       default: UserRole.User,
       required: true,
       enum: ["admin", "user", "chef"],
     },
-    passwordHash: {
-      type: String,
-      required: true,
-    },
-    passwordResetCode: {
-      type: String,
-    },
-    verificationString: {
-      type: String,
-      default: "",
-    },
-    salt: {
-      type: String,
-      default: "",
-    },
+    passwordHash: { type: String, required: true },
+    passwordResetCode: { type: String },
+    verificationString: { type: String },
+    salt: { type: String, required: true },
     photo_url: {
       type: String,
       default:
         "https://karateinthewoodlands.com/wp-content/uploads/2017/09/default-user-image-300x300.png",
     },
-    address: {
-      type: String,
-      default: "Helsinki",
-    },
-    orders: {
-      type: [String],
-      default: [],
-    },
-    menu: {
-      type: [String],
-      default: [],
-    },
-    cuisine: {
-      type: [String],
-      default: [],
-    },
-    promoted: {
-      type: Boolean,
-      default: false,
-    },
-    about: {
-      type: String,
-      default: "",
-    },
-    phone: {
-      type: String,
-      default: "",
-    },
-    rating: {
-      type: Number,
-      default: 0,
-    },
-    verified: {
-      type: Boolean,
-      default: false,
-    },
+    address: { type: String, required: true, default: "Helsinki" },
+    orders: { type: [String], default: [] },
+    menu: { type: [String], default: [] },
+    cuisine: { type: [String], default: [] },
+    promoted: { type: Boolean, default: false },
+    about: { type: String, default: "" },
+    phone: { type: String, default: "" },
+    rating: { type: Number, default: 0 },
+    verified: { type: Boolean, default: false },
   },
   {
     timestamps: true,
@@ -149,12 +99,9 @@ userSchema.methods.validatePassword = async function (
 ): Promise<boolean> {
   const user = this as UserDocument;
 
-  return (
-    bcrypt
-      .compare(candidatePassword, user.passwordHash)
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      .catch((e: unknown) => false)
-  );
+  return bcrypt
+    .compare(candidatePassword, user.passwordHash)
+    .catch((_e: unknown) => false);
 };
 
 userSchema.set("toJSON", {

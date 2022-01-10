@@ -38,6 +38,7 @@ export async function createUserHandler(
       verificationString,
     });
 
+    // Send email to user with verification email link
     await sendEmail({
       from: "noreply@kotichefs.com",
       to: user.email,
@@ -118,39 +119,51 @@ export async function forgotPasswordHandler(
 ) {
   const { email } = req.body;
 
-  // Find user by email
-  const user = await findUserByEmail(email);
+  try {
+    // Find user by email
+    const user = await findUserByEmail(email);
 
-  if (!user) {
-    // Send a 200 status NO MATTER WHAT (unless there's an internal error) - this makes it hard to fish around for emails
-    logger.debug(`User with email ${email} does not exists`);
-    return res.send(
-      "If a user with that email is registered you will receive a password reset email"
-    );
-  }
+    if (!user) {
+      // Send a 200 status NO MATTER WHAT (unless there's an internal error) - this makes it hard to fish around for emails
+      logger.error(`User with email ${email} does not exists`);
+      return res.send(
+        "If a user with that email is registered you will receive a password reset email"
+      );
+    }
 
-  // Generate new password reset code
-  const passwordResetCode = uuid();
+    // Generate new password reset code
+    const passwordResetCode = uuid();
 
-  user.passwordResetCode = passwordResetCode;
+    user.passwordResetCode = passwordResetCode;
 
-  await user.save();
+    await user.save();
 
-  // Send email with link to reset password
-  await sendEmail({
-    from: "noreply@kotichefs.com",
-    to: user.email,
-    subject: "Reset password",
-    html: `
+    // Send email with link to reset password
+    await sendEmail({
+      from: "noreply@kotichefs.com",
+      to: user.email,
+      subject: "Reset password",
+      html: `
           <p>To reset password, click the link below:</p>
 <!--           TODO: Change this to a proper link once we have a proper frontend-->
           <a href="http://localhost:5000/api/user/reset-password/${passwordResetCode}">Reset password</a>`,
-  });
+    });
 
-  // Send a 200 status NO MATTER WHAT (unless there's an internal error) - this makes it hard to fish around for emails
-  return res.send(
-    "If a user with that email is registered you will receive a password reset email"
-  );
+    // Send a 200 status NO MATTER WHAT (unless there's an internal error) - this makes it hard to fish around for emails
+    return res.send(
+      "If a user with that email is registered you will receive a password reset email"
+    );
+  } catch (err: unknown) {
+    logger.error(err);
+
+    let errorMessage = "Something went wrong.";
+
+    if (err instanceof Error) {
+      errorMessage += " Error: " + err.message;
+    }
+
+    return res.status(500).send(errorMessage);
+  }
 }
 
 export async function resetPasswordHandler(
@@ -164,34 +177,58 @@ export async function resetPasswordHandler(
   const { passwordResetCode } = req.params;
   const { password } = req.body;
 
-  // Find user by password reset code
-  const user = await findUserByResetCode(passwordResetCode);
+  try {
+    // Find user by password reset code
+    const user = await findUserByResetCode(passwordResetCode);
 
-  if (
-    !user ||
-    user.passwordResetCode === "" ||
-    user.passwordResetCode !== passwordResetCode
-  ) {
-    return res.status(404).send("Could not reset password");
+    if (
+      !user ||
+      user.passwordResetCode === "" ||
+      user.passwordResetCode !== passwordResetCode
+    ) {
+      return res.status(404).send("Could not reset password");
+    }
+
+    // Hash new password
+    const salt = uuid();
+    const pepper = config.get<string>("pepper");
+    const passwordHash = await bcrypt.hash(salt + password + pepper, 10);
+
+    // Update user
+    user.passwordHash = passwordHash;
+    user.salt = salt;
+    user.passwordResetCode = "";
+
+    await user.save();
+
+    return res.status(200).send("Password successfully reset");
+  } catch (err: unknown) {
+    logger.error(err);
+
+    let errorMessage = "Something went wrong.";
+
+    if (err instanceof Error) {
+      errorMessage += " Error: " + err.message;
+    }
+
+    return res.status(500).send(errorMessage);
   }
-
-  // Hash new password
-  const salt = uuid();
-  const pepper = config.get<string>("pepper");
-  const passwordHash = await bcrypt.hash(salt + password + pepper, 10);
-
-  // Update user
-  user.passwordHash = passwordHash;
-  user.salt = salt;
-  user.passwordResetCode = "";
-
-  await user.save();
-
-  return res.status(200).send("Password successfully reset");
 }
 
-export async function getCurrentUserHandler(req: Request, res: Response) {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-  const user = await findUserById(res.locals.user._id);
-  return res.status(200).send(user);
+export async function getCurrentUserHandler(_req: Request, res: Response) {
+  try {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+    const user = await findUserById(res.locals.user._id);
+    return res.status(200).send(user);
+  } catch (err: unknown) {
+    logger.error(err);
+
+    let errorMessage = "Something went wrong.";
+
+    if (err instanceof Error) {
+      errorMessage += " Error: " + err.message;
+    }
+
+    return res.status(500).send(errorMessage);
+  }
 }

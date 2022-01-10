@@ -4,11 +4,12 @@ import { CreateSessionInput } from "../validation/auth.validationSchema";
 import { findUserByEmail } from "../service/user.service";
 import { signAccessToken, signRefreshToken } from "../service/auth.service";
 
-export async function createSessionHandler(
+export async function createUserSessionHandler(
   req: Request<unknown, unknown, CreateSessionInput>,
   res: Response
 ) {
   const { email, password } = req.body;
+  const userAgent = req.headers["user-agent"] || "";
 
   const user = await findUserByEmail(email);
 
@@ -16,10 +17,12 @@ export async function createSessionHandler(
     return res.send('"Invalid email or password"');
   }
 
+  // Check if user is verified
   if (!user.verified) {
     return res.send("Please verify your email");
   }
 
+  // Validate user password
   const isValid = await user.validatePassword(
     user.salt + password + config.get<string>("pepper")
   );
@@ -28,49 +31,15 @@ export async function createSessionHandler(
     return res.send('"Invalid email or password"');
   }
 
-  // sign a access token
+  // Sign a access token
   const accessToken = signAccessToken(user);
 
-  // sign a refresh token
-  const refreshToken = await signRefreshToken({
-    // Because of bug: https://github.com/Automattic/mongoose/pull/11124/files
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    userId: user._id,
-  });
+  // Sign a refresh token
+  const refreshToken = await signRefreshToken(user._id, userAgent);
 
-  // send the tokens
-
+  // Send the tokens
   return res.send({
     accessToken,
     refreshToken,
   });
 }
-
-// export async function refreshAccessTokenHandler(req: Request, res: Response) {
-//   const refreshToken= get(req, "headers.x-refresh");
-//
-//   const decoded = verifyJwt<{ session: string }>(
-//       refreshToken,
-//       "refreshTokenPublicKey"
-//   );
-//
-//   if (!decoded) {
-//     return res.status(401).send("Could not refresh access token");
-//   }
-//
-//   const session = await findSession(decoded.session);
-//
-//   if (!session || !session.valid) {
-//     return res.status(401).send("Could not refresh access token");
-//   }
-//
-//   const user = await findUserById(String(session.user));
-//
-//   if (!user) {
-//     return res.status(401).send("Could not refresh access token");
-//   }
-//
-//   const accessToken = signAccessToken(user);
-//
-//   return res.send({ accessToken });
-// }
