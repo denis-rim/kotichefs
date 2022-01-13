@@ -8,6 +8,6 @@ router.get("/healthcheck", (_, res) => res.sendStatus(200));
 
 router.use("/user", user);
 
-router.use("/session", auth);
+router.use("/sessions", auth);
 
 export default router;

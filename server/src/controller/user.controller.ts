@@ -218,7 +218,13 @@ export async function resetPasswordHandler(
 export async function getCurrentUserHandler(_req: Request, res: Response) {
   try {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-    const user = await findUserById(res.locals.user._id);
+    const user = await findUserById(res.locals.user.decoded.user);
+
+    // if no user send unauthorized
+    if (!user) {
+      return res.status(401).send("Unauthorized");
+    }
+
     return res.status(200).send(user);
   } catch (err: unknown) {
     logger.error(err);

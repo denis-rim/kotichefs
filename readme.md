@@ -1,4 +1,4 @@
-# KotiCheefs - A course project for the course [Full Stack open 2021]
+# KotiChefs - A course project for the course [Full Stack open 2021]
 ### https://fullstackopen.com/en/ 
 
 ## Features
@@ -8,7 +8,9 @@
 4. Reset password
 5. Get current user
 6. Login
-7. Access token
+7. Logout
+8. Access token
+9. Refresh token
 
 
 ## What you will need

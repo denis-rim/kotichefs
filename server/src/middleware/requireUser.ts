@@ -1,7 +1,21 @@
 import { Request, Response, NextFunction } from "express";
 
-const requireUser = (_req: Request, res: Response, next: NextFunction) => {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+export interface MyResponseLocals {
+  user: {
+    user: string;
+    username: string;
+    email: string;
+    session: string;
+    iat: number;
+    exp: number;
+  };
+}
+
+const requireUser = (
+  _req: Request,
+  res: Response<unknown, MyResponseLocals>,
+  next: NextFunction
+) => {
   const user = res.locals.user;
 
   if (!user) {

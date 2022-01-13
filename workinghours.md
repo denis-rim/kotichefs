@@ -13,4 +13,5 @@
 | 06.01 |  4   | server |Add forget password and reset password functionality|
 | 07.01 |  6   | server |Refactor, improves, add auth and session|
 | 10.01 |  3   | server |Error handling, storing user agent in session, small fixes|
-| total |  27  | 
+| 13.01 |  4   | server |Error handling, get user sessions, delete session handlers, refactor jwt, refresh token|
+| total |  31  | 
