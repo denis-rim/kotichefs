@@ -14,4 +14,5 @@
 | 07.01 |  6   | server |Refactor, improves, add auth and session|
 | 10.01 |  3   | server |Error handling, storing user agent in session, small fixes|
 | 13.01 |  4   | server |Error handling, get user sessions, delete session handlers, refactor jwt, refresh token|
-| total |  31  | 
+| 16.01 |  8   | server |Product model and functionality, response types, improved comments|
+| total |  39  | 

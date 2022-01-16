@@ -24,24 +24,32 @@ export async function updateSession(
   return SessionModel.updateOne(query, update);
 }
 
+// Reissue access token if it is expired
 export async function reIssueAccessToken({
   refreshToken,
 }: {
   refreshToken: string;
 }) {
+  // Verify refresh token
   const { decoded } = verifyJwt(refreshToken, "refreshTokenPublicKey");
 
+  // If refresh token is expired, return false
   if (!decoded || !get(decoded, "session")) return false;
 
+  // Find session by session id
   const session = await SessionModel.findById(get(decoded, "session"));
 
+  // If session is not found, return false
   if (!session || !session.valid) return false;
 
+  // Find user by user id
   const user = await findUserById(session.user);
 
+  // If user is not found, return false
   if (!user) return false;
 
-  const accessToken = signJwt(
+  // If session and user is valid, reissue access token
+  return signJwt(
     {
       user: user._id,
       username: user.username,
@@ -51,36 +59,4 @@ export async function reIssueAccessToken({
     "accessTokenPrivateKey",
     { expiresIn: config.get("accessTokenTtl") } // 15 minutes,
   );
-
-  return accessToken;
 }
-
-// export async function signRefreshToken(userId: string, userAgent: string) {
-//   // const session = await createSession(userId, userAgent);
-//
-//   const refreshToken = signJwt(
-//     {
-//       session: session._id,
-//     },
-//     "refreshTokenPrivateKey",
-//     {
-//       expiresIn: "1y",
-//     }
-//   );
-//
-//   return refreshToken;
-// }
-
-// export function signAccessToken(user: UserDocument) {
-//   const { _id, username, role } = user;
-//
-//   const accessToken = signJwt(
-//     { _id, username, role },
-//     "accessTokenPrivateKey",
-//     {
-//       expiresIn: "15m",
-//     }
-//   );
-//
-//   return accessToken;
-// }

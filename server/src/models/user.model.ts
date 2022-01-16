@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
+import { ProductDocument } from "./product.model";
 
 export enum Cuisine {
   Finnish = "finnish",
@@ -16,9 +17,9 @@ export enum Cuisine {
 }
 
 export enum UserRole {
-  Admin = "admin",
   User = "user",
   Chef = "chef",
+  Admin = "admin",
 }
 
 export interface UserDocument extends mongoose.Document {
@@ -34,13 +35,14 @@ export interface UserDocument extends mongoose.Document {
   photo_url: string;
   role: UserRole;
   orders: string[];
-  menu: string[];
+  products: ProductDocument["_id"][];
   cuisine: Cuisine[];
   promoted: boolean;
   about: string;
   phone: string;
   rating: number;
   verified: boolean;
+  isAdmin: boolean;
   createdAt: Date;
   updatedAt: Date;
   validatePassword(candidatePassword: string): Promise<boolean>;
@@ -56,7 +58,7 @@ export type PublicUser = Pick<
   | "role"
   | "rating"
   | "cuisine"
-  | "menu"
+  | "products"
 >;
 
 const userSchema = new mongoose.Schema(
@@ -81,13 +83,14 @@ const userSchema = new mongoose.Schema(
     },
     address: { type: String, required: true, default: "Helsinki" },
     orders: { type: [String], default: [] },
-    menu: { type: [String], default: [] },
+    products: { type: [String], default: [] },
     cuisine: { type: [String], default: [] },
     promoted: { type: Boolean, default: false },
     about: { type: String, default: "" },
     phone: { type: String, default: "" },
     rating: { type: Number, default: 0 },
     verified: { type: Boolean, default: false },
+    isAdmin: { type: Boolean, default: false },
   },
   {
     timestamps: true,

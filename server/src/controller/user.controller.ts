@@ -16,6 +16,7 @@ import {
   findUserById,
   findUserByResetCode,
 } from "../service/user.service";
+import { MyResponseLocals } from "../middleware/requireUser";
 
 // Register a new user
 export async function createUserHandler(
@@ -192,10 +193,9 @@ export async function resetPasswordHandler(
     // Hash new password
     const salt = uuid();
     const pepper = config.get<string>("pepper");
-    const passwordHash = await bcrypt.hash(salt + password + pepper, 10);
 
     // Update user
-    user.passwordHash = passwordHash;
+    user.passwordHash = await bcrypt.hash(salt + password + pepper, 10);
     user.salt = salt;
     user.passwordResetCode = "";
 
@@ -215,12 +215,14 @@ export async function resetPasswordHandler(
   }
 }
 
-export async function getCurrentUserHandler(_req: Request, res: Response) {
+export async function getCurrentUserHandler(
+  _req: Request,
+  res: Response<unknown, MyResponseLocals>
+) {
   try {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-    const user = await findUserById(res.locals.user.decoded.user);
+    const user = await findUserById(res.locals.user.user);
 
-    // if no user send unauthorized
+    // If no user send unauthorized
     if (!user) {
       return res.status(401).send("Unauthorized");
     }
