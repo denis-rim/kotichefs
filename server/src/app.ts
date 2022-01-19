@@ -3,11 +3,11 @@ dotenv.config();
 import deserializeUser from "./middleware/deserializeUser";
 import express from "express";
 import config from "config";
+import cookieParser from "cookie-parser";
 import connectDB from "./utils/db";
 import logger from "./utils/logger";
 import router from "./routes";
 import cors from "cors";
-import cookieParser from "cookie-parser";
 
 const app = express();
 

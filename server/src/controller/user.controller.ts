@@ -33,7 +33,8 @@ export async function createUserHandler(
     const passwordHash = await bcrypt.hash(salt + body.password + pepper, 10);
 
     const user = await createUser({
-      ...body,
+      username: body.username,
+      email: body.email,
       passwordHash,
       salt,
       verificationString,

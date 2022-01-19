@@ -46,3 +46,4 @@ Client:
 - Axios
 - Zod
 - react-hooks-form
+- classnames

@@ -7,7 +7,7 @@ import config from "config";
 // Extract access token from authorization header or cookies
 const accessTokenExtractor = (req: Request) => {
   const authorization = req.get("authorization");
-  const cookies = req.get("cookies.accessToken");
+  const cookies = req.cookies.accessToken as string | undefined;
 
   if (authorization && authorization.toLowerCase().startsWith("bearer "))
     return authorization.substring(7);
@@ -20,7 +20,7 @@ const accessTokenExtractor = (req: Request) => {
 // Extract refresh token from header or cookies
 const refreshTokenExtractor = (req: Request) => {
   const cookiesFromHeaders = req.headers["x-refresh"];
-  const cookies = req.get("cookies.refreshToken");
+  const cookies = req.cookies.refreshToken as string | undefined;
 
   if (cookiesFromHeaders && cookiesFromHeaders)
     return cookiesFromHeaders as string;
@@ -45,8 +45,6 @@ const deserializeUser = async (
 
   // Verify access token
   const { decoded, expired } = verifyJwt(accessToken, "accessTokenPublicKey");
-
-  console.log(decoded);
 
   // If access token is valid, put user in req.locals
   if (decoded) {

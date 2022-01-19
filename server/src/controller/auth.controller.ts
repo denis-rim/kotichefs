@@ -22,7 +22,7 @@ export async function createUserSessionHandler(
     const user = await findUserByEmail(email);
 
     if (!user) {
-      return res.send("Invalid email or password");
+      return res.status(401).send("Invalid email or password");
     }
 
     // Validate user password
@@ -36,7 +36,7 @@ export async function createUserSessionHandler(
     }
 
     if (!isValid) {
-      return res.send("Invalid email or password");
+      return res.status(401).send("Invalid email or password");
     }
 
     // Create a session

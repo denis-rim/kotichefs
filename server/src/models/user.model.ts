@@ -64,12 +64,11 @@ export type PublicUser = Pick<
 const userSchema = new mongoose.Schema(
   {
     username: { type: String, required: true, unique: true },
-    fullName: { type: String, required: true },
+    fullName: { type: String },
     email: { type: String, required: true, unique: true, index: true },
     role: {
       type: String,
       default: UserRole.User,
-      required: true,
       enum: ["admin", "user", "chef"],
     },
     passwordHash: { type: String, required: true },
