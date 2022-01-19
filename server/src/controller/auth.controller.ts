@@ -42,7 +42,7 @@ export async function createUserSessionHandler(
     // Create a session
     const session = await createSession(user._id, userAgent);
 
-    // Sign a access token
+    // Sign access token
     const accessToken = signJwt(
       {
         user: user._id,
@@ -60,6 +60,25 @@ export async function createUserSessionHandler(
       "refreshTokenPrivateKey",
       { expiresIn: config.get("refreshTokenTtl") } // 1 year
     );
+
+    // Set access token cookie and refresh token cookie
+    res.cookie("accessToken", accessToken, {
+      httpOnly: true,
+      maxAge: config.get("accessTokenTtl"),
+      domain: config.get("cookieDomain"),
+      path: "/",
+      sameSite: "strict",
+      secure: config.get("cookieSecure"),
+    });
+
+    res.cookie("refreshToken", refreshToken, {
+      httpOnly: true,
+      maxAge: config.get("refreshTokenTtl"),
+      domain: config.get("cookieDomain"),
+      path: "/",
+      sameSite: "strict",
+      secure: config.get("cookieSecure"),
+    });
 
     // Send the tokens
     return res.send({

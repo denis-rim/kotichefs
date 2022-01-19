@@ -6,8 +6,21 @@ import config from "config";
 import connectDB from "./utils/db";
 import logger from "./utils/logger";
 import router from "./routes";
+import cors from "cors";
+import cookieParser from "cookie-parser";
 
 const app = express();
+
+// Use cors
+app.use(
+  cors({
+    origin: config.get("origin"),
+    credentials: true,
+  })
+);
+
+// Cookie parser
+app.use(cookieParser());
 
 // This allows us to access the body of POST/PUT
 // requests in our route handlers (as req.body)

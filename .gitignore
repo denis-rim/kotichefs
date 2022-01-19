@@ -1,5 +1,7 @@
 .idea
 node_modules
 *.env
+.env.local
 /server/config/default.ts
 /server/config/custom-environment-variables.ts
+/Design

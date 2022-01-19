@@ -29,7 +29,7 @@ export interface UserDocument extends mongoose.Document {
   email: string;
   passwordHash: string;
   passwordResetCode: string;
-  address: string;
+  city: string;
   verificationString: string;
   salt: string;
   photo_url: string;
@@ -53,7 +53,7 @@ export type PublicUser = Pick<
   | "id"
   | "username"
   | "fullName"
-  | "address"
+  | "city"
   | "photo_url"
   | "role"
   | "rating"
@@ -81,7 +81,7 @@ const userSchema = new mongoose.Schema(
       default:
         "https://karateinthewoodlands.com/wp-content/uploads/2017/09/default-user-image-300x300.png",
     },
-    address: { type: String, required: true, default: "Helsinki" },
+    city: { type: String, required: true, default: "Helsinki" },
     orders: { type: [String], default: [] },
     products: { type: [String], default: [] },
     cuisine: { type: [String], default: [] },
