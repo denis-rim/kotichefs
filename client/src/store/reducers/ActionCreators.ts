@@ -17,9 +17,9 @@ export const fetchUser = () => async (dispatch: AppDispatch) => {
 
 export const loginUser = () => async (dispatch: AppDispatch) => {
   try {
-    dispatch(userSlice.actions.usersFetchingError(null));
+    dispatch(userSlice.actions.setUserLoadingError(null));
 
-    dispatch(userSlice.actions.setLoading(true));
+    dispatch(userSlice.actions.setUserLoading(true));
 
     const response = await axios.post(
       "http://localhost:5000/api/sessions",
@@ -33,7 +33,7 @@ export const loginUser = () => async (dispatch: AppDispatch) => {
     );
 
     dispatch(userSlice.actions.setUser(response.data));
-    dispatch(userSlice.actions.setLoading(false));
+    dispatch(userSlice.actions.setUserLoading(false));
   } catch (err) {
     console.log(err);
     // @ts-ignore
