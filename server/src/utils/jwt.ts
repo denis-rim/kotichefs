@@ -33,14 +33,20 @@ export function verifyJwt<T>(
 
     if (err instanceof Error) {
       errorMessage += "Error: " + err.message;
+
+      logger.error(errorMessage);
+
+      return {
+        valid: false,
+        expired: err.message === "jwt expired",
+        decoded: null,
+      };
     }
     logger.error(errorMessage);
 
     return {
       valid: false,
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      expired: err.message === "jwt expired",
+      expired: true,
       decoded: null,
     };
   }

@@ -42,7 +42,8 @@ Server:
 Client:
 - TypeScript
 - React
-- Next
+- react-router v6
+- redux-toolkit
 - Axios
 - Zod
 - react-hooks-form

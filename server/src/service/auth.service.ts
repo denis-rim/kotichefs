@@ -48,6 +48,9 @@ export async function reIssueAccessToken({
   // If user is not found, return false
   if (!user) return false;
 
+  // Invalidate existing session
+  // await updateSession({ _id: session._id }, { valid: false });
+
   // If session and user is valid, reissue access token
   return signJwt(
     {

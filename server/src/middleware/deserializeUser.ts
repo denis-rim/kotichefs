@@ -22,10 +22,10 @@ const refreshTokenExtractor = (req: Request) => {
   const cookiesFromHeaders = req.headers["x-refresh"];
   const cookies = req.cookies.refreshToken as string | undefined;
 
-  if (cookiesFromHeaders && cookiesFromHeaders)
-    return cookiesFromHeaders as string;
+  if (cookiesFromHeaders) return cookiesFromHeaders as string;
 
   if (cookies) return cookies;
+
   return null;
 };
 
@@ -39,39 +39,46 @@ const deserializeUser = async (
   const accessToken = accessTokenExtractor(req);
   const refreshToken = refreshTokenExtractor(req);
 
-  if (!accessToken) {
+  // If no access token or no refresh token stop her
+  if (!accessToken && !refreshToken) {
     return next();
   }
 
-  // Verify access token
-  const { decoded, expired } = verifyJwt(accessToken, "accessTokenPublicKey");
+  // Try to verify the access or refresh tokens
+  if (accessToken || refreshToken) {
+    if (accessToken) {
+      const { decoded, expired } = verifyJwt(
+        accessToken,
+        "accessTokenPublicKey"
+      );
 
-  // If access token is valid, put user in req.locals
-  if (decoded) {
-    res.locals.user = decoded;
-    return next();
-  }
+      if (decoded && !expired) {
+        res.locals.user = decoded;
+        return next();
+      }
+    }
 
-  // If access token is expired, try to refresh it
-  if (refreshToken && expired) {
-    const newAccessToken = await reIssueAccessToken({ refreshToken });
+    // If access token is expired, try to refresh it
+    if (refreshToken) {
+      const newAccessToken = await reIssueAccessToken({ refreshToken });
 
-    if (newAccessToken) {
-      res.setHeader("x-access-token", newAccessToken);
+      if (newAccessToken) {
+        res.setHeader("x-access-token", newAccessToken);
 
-      res.cookie("accessToken", newAccessToken, {
-        httpOnly: true,
-        maxAge: config.get("accessTokenTtl"),
-        domain: config.get("cookieDomain"),
-        path: "/",
-        sameSite: "strict",
-        secure: config.get("cookieSecure"),
-      });
+        res.cookie("accessToken", newAccessToken, {
+          httpOnly: true,
+          maxAge: config.get("accessTokenTtl"),
+          domain: config.get("cookieDomain"),
+          path: "/",
+          sameSite: "strict",
+          secure: config.get("cookieSecure"),
+        });
 
-      const result = verifyJwt(newAccessToken, "accessTokenPublicKey");
+        const result = verifyJwt(newAccessToken, "accessTokenPublicKey");
 
-      res.locals.user = result.decoded;
-      return next();
+        res.locals.user = result.decoded;
+        return next();
+      }
     }
   }
 
