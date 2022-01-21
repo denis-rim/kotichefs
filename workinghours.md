@@ -18,4 +18,5 @@
 | 19.01 | 1     | server          | Update readme, add set cookie to auth controller and deserializeUser, add cookie parser                        |
 | 19.01 | 4     | client          | Set up client, create register page                                                                            |
 | 19.01 | 2     | server / client | Refactor user registration to accept only username, email and password, add Button component, Login page fixes |
-| total | 46    | 
+| 19.01 | 4     | server / client | Switch to React, add redux-toolkit, add routing, fix jwt refresh functionality                                 |
+| total | 52    | 
