@@ -48,3 +48,4 @@ Client:
 - Zod
 - react-hooks-form
 - classnames
+- react-helmet-async

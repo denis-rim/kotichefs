@@ -1,16 +1,26 @@
-export interface UserModel {
-  city: string;
-  _id: string;
-  username: string;
+export interface UserModelPublic {
+  id: string;
+  fullName: string;
+  photo_url: string;
+  verified: boolean;
+  role: string;
+  isAdmin: boolean;
+}
+
+export interface UserModelPrivate {
+  id: string;
   fullName: string;
   email: string;
-  role: string;
+  city: string;
   photo_url: string;
+  role: string;
+  orders: [];
+  products: [];
+  cosine: [];
+  promoted: [];
   about: string;
   phone: string;
   rating: number;
   verified: boolean;
   isAdmin: boolean;
-  createdAt: string;
-  updatedAt: string;
 }

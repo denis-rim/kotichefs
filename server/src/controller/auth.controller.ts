@@ -31,9 +31,9 @@ export async function createUserSessionHandler(
     );
 
     // Check if user is verified
-    if (!user.verified) {
-      return res.send("Please verify your email");
-    }
+    // if (!user.verified) {
+    //   return res.status(401).send("Please verify your email");
+    // }
 
     if (!isValid) {
       return res.status(401).send("Invalid email or password");
@@ -80,10 +80,14 @@ export async function createUserSessionHandler(
       secure: config.get("cookieSecure"),
     });
 
-    // Send the tokens
+    // Send user data
     return res.send({
-      accessToken,
-      refreshToken,
+      id: user._id,
+      fullName: user.fullName,
+      photo_url: user.photo_url,
+      verified: user.verified,
+      role: user.role,
+      isAdmin: user.isAdmin,
     });
   } catch (err) {
     logger.error(err);

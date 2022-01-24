@@ -50,7 +50,14 @@ export async function createUserHandler(
           <a href="http://localhost:5000/api/user/verify-email/${user._id}/${verificationString}">Verify Email</a>`,
     });
 
-    return res.status(201).send(user);
+    return res.status(201).send({
+      id: user._id,
+      fullName: user.fullName,
+      photo_url: user.photo_url,
+      verified: user.verified,
+      role: user.role,
+      isAdmin: user.isAdmin,
+    });
   } catch (err: unknown) {
     logger.error(err);
 
@@ -228,7 +235,23 @@ export async function getCurrentUserHandler(
       return res.status(401).send("Unauthorized");
     }
 
-    return res.status(200).send(user);
+    return res.status(200).send({
+      id: user._id,
+      fullName: user.fullName,
+      email: user.email,
+      city: user.city,
+      photo_url: user.photo_url,
+      role: user.role,
+      orders: user.orders,
+      products: user.products,
+      cuisine: user.cuisine,
+      promoted: user.promoted,
+      about: user.about,
+      phone: user.phone,
+      rating: user.rating,
+      verified: user.verified,
+      isAdmin: user.isAdmin,
+    });
   } catch (err: unknown) {
     logger.error(err);
 

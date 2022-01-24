@@ -1,33 +1,50 @@
 import React from "react";
-import "./App.css";
-import { Outlet, Link } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "./store/hooks/redux";
-import { loginUser, me } from "./store/reducers/ActionCreators";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { HelmetProvider } from "react-helmet-async";
+
+import { useAppSelector } from "./hooks/redux";
+
+import Expenses from "./routes/expenses";
+import Invoices from "./routes/invoices";
+import Invoice from "./routes/invoice";
+import Home from "./routes/home";
+import LoginPage from "./routes/login";
+import RegisterPage from "./routes/register";
 
 function App() {
-  const { user, isLoading, error } = useAppSelector(
-    (state) => state.userReducer
-  );
-  const dispatch = useAppDispatch();
+  const { isLoggedIn } = useAppSelector((state) => state.userReducer);
 
-  console.log(user);
-  console.log(isLoading);
-  console.log(error);
   return (
-    <div>
-      <h1>Bookkeeper</h1>
-      <nav
-        style={{
-          borderBottom: "solid 1px",
-          paddingBottom: "1rem",
-        }}
-      >
-        <Link to="/invoices">Invoices</Link> |{" "}
-        <Link to="/expenses">Expenses</Link>
-      </nav>
-      <Outlet />
-      <button onClick={() => dispatch(loginUser())}>Login</button>
-    </div>
+    <HelmetProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home />}>
+            <Route path="expenses" element={<Expenses />} />
+            <Route path="invoices" element={<Invoices />}>
+              <Route
+                index
+                element={
+                  <main style={{ padding: "1rem" }}>
+                    <p>Select an invoice</p>
+                  </main>
+                }
+              />
+              <Route path=":invoiceId" element={<Invoice />} />
+            </Route>
+          </Route>
+          <Route path="login" element={<LoginPage />} />
+          <Route path="register" element={<RegisterPage />} />
+          <Route
+            path="*"
+            element={
+              <main style={{ padding: "1rem" }}>
+                <p>There's nothing here!</p>
+              </main>
+            }
+          />
+        </Routes>
+      </BrowserRouter>
+    </HelmetProvider>
   );
 }
 
