@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { UserModelPublic } from "../../models/UserModel";
-import { loginUser, me, registerUser } from "./ActionCreators";
+import { currentUserData, loginUser, registerUser } from "./ActionCreators";
 
 interface UserState {
   user: UserModelPublic | null;
@@ -21,15 +21,18 @@ export const userSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: {
-    [me.fulfilled.type]: (state, action: PayloadAction<UserModelPublic>) => {
+    [currentUserData.fulfilled.type]: (
+      state,
+      action: PayloadAction<UserModelPublic>
+    ) => {
       state.isLoading = false;
       state.error = "";
       state.user = action.payload;
     },
-    [me.pending.type]: (state) => {
+    [currentUserData.pending.type]: (state) => {
       state.isLoading = true;
     },
-    [me.rejected.type]: (state, action: PayloadAction<string>) => {
+    [currentUserData.rejected.type]: (state, action: PayloadAction<string>) => {
       console.log(action.payload);
       state.isLoading = false;
       state.error = action.payload;

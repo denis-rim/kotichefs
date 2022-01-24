@@ -1,26 +1,8 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { login, register } from "../../services/api/handlers/auth";
+import { me } from "../../services/api/handlers/user";
 import { CreateUserInput, LoginUserInput } from "../../services/validation";
-import axios from "axios";
-import { UserModelPublic } from "../../models/UserModel";
 import { NavigateFunction } from "react-router-dom";
-
-// export const me = () => async (dispatch: AppDispatch) => {
-//   try {
-//     dispatch(userSlice.actions.userFetching());
-//     const { data } = await axios.get<UserModel>(
-//       "http://localhost:5000/api/user/me1",
-//       {
-//         withCredentials: true,
-//       }
-//     );
-//     dispatch(userSlice.actions.userFetchingSuccess(data));
-//   } catch (err) {
-//     console.log(err);
-//     // @ts-ignore
-//     dispatch(userSlice.actions.setUserLoadingError(err.message));
-//   }
-// };
 
 // Login user action creator
 export const loginUser = createAsyncThunk(
@@ -65,17 +47,12 @@ export const registerUser = createAsyncThunk(
 );
 
 // Me action creator
-export const me = createAsyncThunk(
+export const currentUserData = createAsyncThunk(
   "user/fetchMe",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get<UserModelPublic>(
-        "http://localhost:5000/api/user/me",
-        {
-          withCredentials: true,
-        }
-      );
-
+      const response = await me();
+      console.log(response);
       return response.data;
     } catch (err) {
       console.warn(err);

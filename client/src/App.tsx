@@ -2,16 +2,12 @@ import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 
-import { useAppSelector } from "./hooks/redux";
-
 import Home from "./routes/home";
 
 const LoginPage = React.lazy(() => import("./routes/login"));
 const RegisterPage = React.lazy(() => import("./routes/register"));
 
 function App() {
-  const { isLoggedIn } = useAppSelector((state) => state.userReducer);
-
   return (
     <HelmetProvider>
       <Router>

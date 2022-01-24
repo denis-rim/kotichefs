@@ -12,3 +12,9 @@ export const register = (body: CreateUserInput) => {
 export const login = (body: LoginUserInput) => {
   return api.post<LoginUserInput, { data: UserModelPublic }>("/sessions", body);
 };
+
+export const logout = () => {
+  return api.delete("/sessions/sessions").then(() => {
+    localStorage.removeItem("persist:root");
+  });
+};
