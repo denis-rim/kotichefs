@@ -20,4 +20,5 @@
 | 19.01 | 2     | server / client | Refactor user registration to accept only username, email and password, add Button component, Login page fixes |
 | 21.01 | 4     | server / client | Switch to React, add redux-toolkit, add routing, fix jwt refresh functionality                                 |
 | 21.01 | 6     | server / client | Finish shift to pure react, refactor backend to send user                                                      |
-| total | 58    | 
+| 25.01 | 4     | client          | Worked on client, add 404 page, fetch products                                                                 |
+| total | 62    | 

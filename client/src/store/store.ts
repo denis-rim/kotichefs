@@ -2,6 +2,7 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import userReducer from "./reducers/UserSlice";
+import productReducer from "./reducers/ProductSlice";
 import {
   FLUSH,
   PAUSE,
@@ -13,12 +14,14 @@ import {
 
 const rootReducer = combineReducers({
   userReducer,
+  productReducer,
 });
 
 const persistConfig = {
   key: "root",
   version: 1,
   storage,
+  whitelist: ["userReducer"],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

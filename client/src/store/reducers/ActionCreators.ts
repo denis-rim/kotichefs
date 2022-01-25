@@ -3,6 +3,7 @@ import { login, register } from "../../services/api/handlers/auth";
 import { me } from "../../services/api/handlers/user";
 import { CreateUserInput, LoginUserInput } from "../../services/validation";
 import { NavigateFunction } from "react-router-dom";
+import { fetchProducts } from "../../services/api/handlers/product";
 
 // Login user action creator
 export const loginUser = createAsyncThunk(
@@ -56,6 +57,22 @@ export const currentUserData = createAsyncThunk(
     } catch (err) {
       console.warn(err);
       return rejectWithValue("Failed to load user");
+    }
+  }
+);
+
+// Fetch products action creator
+export const fetchAllProducts = createAsyncThunk(
+  "products/fetchProducts",
+  async (_, { rejectWithValue }) => {
+    try {
+      console.log("Fetching products...");
+      const response = await fetchProducts();
+      console.log(response);
+      return response.data;
+    } catch (err) {
+      console.warn(err);
+      return rejectWithValue(err);
     }
   }
 );

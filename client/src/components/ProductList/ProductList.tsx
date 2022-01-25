@@ -1,4 +1,7 @@
 import { StarIcon } from "@heroicons/react/solid";
+import { useEffect } from "react";
+import { useAppDispatch } from "../../hooks/redux";
+import { fetchAllProducts } from "../../store/reducers/ActionCreators";
 
 const products = [
   {
@@ -53,6 +56,12 @@ function classNames(...classes: string[]) {
 }
 
 function ProductList() {
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    console.log("ProductList component mounted");
+    dispatch(fetchAllProducts());
+  }, [dispatch]);
   return (
     <div className="bg-white">
       <div className="max-w-7xl mx-auto overflow-hidden">
