@@ -52,7 +52,6 @@ export const currentUserData = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const response = await me();
-      console.log(response);
       return response.data;
     } catch (err) {
       console.warn(err);
