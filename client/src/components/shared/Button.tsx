@@ -1,5 +1,6 @@
 import React from "react";
 import cn from "classnames";
+import { Link } from "react-router-dom";
 
 export interface ButtonProps {
   appearance?: "primary" | "secondary" | "danger";
@@ -31,6 +32,25 @@ function Button({
     secondary: "",
     danger: "",
   };
+
+  if (href) {
+    return (
+      <div>
+        <Link
+          to={href}
+          className={cn(styles.button, className, {
+            [styles.primary]: appearance === "primary",
+            [styles.secondary]: appearance === "secondary",
+            [styles.danger]: appearance === "danger",
+          })}
+          {...props}
+        >
+          {children}
+        </Link>
+      </div>
+    );
+  }
+
   return (
     <div>
       <button
