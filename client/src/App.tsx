@@ -7,6 +7,7 @@ import NotFound from "./routes/404";
 
 const LoginPage = React.lazy(() => import("./routes/login"));
 const RegisterPage = React.lazy(() => import("./routes/register"));
+const CreatePage = React.lazy(() => import("./routes/create"));
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="login" element={<LoginPage />} />
             <Route path="register" element={<RegisterPage />} />
+            <Route path="create" element={<CreatePage />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </React.Suspense>

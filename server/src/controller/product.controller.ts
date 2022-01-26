@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import {
   CreateProductInput,
   DeleteProductInput,
+  GetAllProductInput,
   GetProductInput,
   UpdateProductInput,
 } from "../validation/product.validationSchema";
@@ -13,6 +14,7 @@ import {
   findAndUpdateProduct,
   findProduct,
   getAllProducts,
+  getAllProductsCount,
 } from "../service/product.service";
 import { findUserById } from "../service/user.service";
 
@@ -51,19 +53,44 @@ export async function createProductHandler(
   }
 }
 
-// TODO: Add pagination
-export async function getAllProductsHandler(_req: Request, res: Response) {
+const ITEMS_PER_PAGE = 20;
+
+export async function getAllProductsHandler(
+  req: Request<GetAllProductInput>,
+  res: Response
+) {
   try {
+    // Get page out of query
+    const page = Number(req.query.page) || 1;
+
+    // Number of items to skip
+    const skip = ITEMS_PER_PAGE * (page - 1);
+
+    // Put all query params here
+    const query = {};
+
+    // Get all products count promise
+    const countPromise = getAllProductsCount(query);
+
+    // Get all products promise
+    const productsPromise = getAllProducts(query, skip, ITEMS_PER_PAGE);
+
     // Get all products
-    const products = await getAllProducts();
+    const [products, count] = await Promise.all([
+      productsPromise,
+      countPromise,
+    ]);
 
     // If products not found return 404
     if (!products) {
       return res.status(404).send("Products not found");
     }
 
+    // Count number of pages
+    const pagesCount = Math.ceil(count / ITEMS_PER_PAGE);
+
     // Return products
-    return res.send(products);
+    return res.send({ pagination: { count, pagesCount }, products });
   } catch (err) {
     logger.error(err);
 

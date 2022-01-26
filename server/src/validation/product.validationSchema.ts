@@ -38,7 +38,7 @@ const paramsProductId = {
 };
 
 const paramsProductsPage = {
-  params: object({
+  query: object({
     page: string().optional(),
   }),
 };
@@ -66,6 +66,6 @@ export const deleteProductSchema = object({
 
 export type CreateProductInput = TypeOf<typeof createProductSchema>["body"];
 export type GetProductInput = TypeOf<typeof getProductSchema>["params"];
-export type GetAllProductInput = TypeOf<typeof getAllProductSchema>["params"];
+export type GetAllProductInput = TypeOf<typeof getAllProductSchema>["query"];
 export type UpdateProductInput = TypeOf<typeof updateProductSchema>;
 export type DeleteProductInput = TypeOf<typeof deleteProductSchema>["params"];

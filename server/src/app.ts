@@ -33,15 +33,21 @@ app.use(deserializeUser);
 
 // Add all the routes to our Express server
 // exported from routes/index.ts
-// all routes prefixed with /api
+// All routes prefixed with /api
 app.use("/api", router);
 
 async function start() {
   try {
+    // Connect to the database
     await connectDB();
+
+    // Start the server
     app.listen(port, () => {
       logger.info(`Server started on port ${port}`);
     });
+
+    // Add all the routes to our Express server
+    // routes(app);
   } catch (err: unknown) {
     let errorMessage = "Something went wrong.";
 

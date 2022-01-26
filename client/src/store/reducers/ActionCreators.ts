@@ -64,12 +64,10 @@ export const currentUserData = createAsyncThunk(
 // Fetch products action creator
 export const fetchAllProducts = createAsyncThunk(
   "products/fetchProducts",
-  async (_, { rejectWithValue }) => {
+  async (page: number, { rejectWithValue }) => {
     try {
-      console.log("Fetching products...");
-      const response = await fetchProducts();
-      console.log(response);
-      return response.data;
+      const response = await fetchProducts(page);
+      return response.data.products;
     } catch (err) {
       console.warn(err);
       return rejectWithValue(err);

@@ -1,7 +1,7 @@
 import { api } from "../apiClient";
 
 export interface ProductModel {
-  id: string;
+  _id: string;
   user: string;
   name: string;
   price: number;
@@ -14,7 +14,11 @@ export interface ProductModel {
   updatedAt: string;
 }
 
-export function fetchProducts() {
-  console.log("fetchProducts");
-  return api.get<null, { data: ProductModel[] }>("/products");
+interface ProductResponse {
+  pagination: { count: number; pagesCount: number };
+  products: ProductModel[];
+}
+
+export function fetchProducts(page: number) {
+  return api.get<null, { data: ProductResponse }>(`/products?page=${page}`);
 }

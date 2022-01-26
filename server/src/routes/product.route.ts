@@ -9,9 +9,9 @@ import {
 } from "../validation/product.validationSchema";
 import {
   createProductHandler,
-  getProductHandler,
-  getAllProductsHandler,
   deleteProductHandler,
+  getAllProductsHandler,
+  getProductHandler,
   updateProductHandler,
 } from "../controller/product.controller";
 import requireUser from "../middleware/requireUser";

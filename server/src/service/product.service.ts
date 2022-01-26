@@ -15,8 +15,16 @@ export async function createProduct(
   return ProductModel.create(input);
 }
 
-export async function getAllProducts() {
-  return ProductModel.find();
+export async function getAllProducts(
+  query: FilterQuery<ProductDocument>,
+  skip: number,
+  limit: number
+) {
+  return ProductModel.find(query).limit(limit).skip(skip);
+}
+
+export async function getAllProductsCount(query: FilterQuery<ProductDocument>) {
+  return ProductModel.estimatedDocumentCount(query);
 }
 
 export async function findProduct(
