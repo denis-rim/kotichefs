@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { CreateUserInput, createUserSchema } from "../services/validation";
 import Button from "../components/shared/Button";
 import { useAppDispatch } from "../hooks/redux";
-import { registerUser } from "../store/reducers/ActionCreators";
+import { registerUser } from "../store/actions/UserActionCreators";
 
 function RegisterPage() {
   const navigate = useNavigate();

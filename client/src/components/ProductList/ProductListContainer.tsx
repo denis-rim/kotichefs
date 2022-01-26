@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import ProductCard from "./ProductCard";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
-import { fetchAllProducts } from "../../store/reducers/ActionCreators";
+import { fetchAllProducts } from "../../store/actions/ProductActionCreators";
 
 function ProductListContainer() {
   const [page, setPage] = React.useState(1);

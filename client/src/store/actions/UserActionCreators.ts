@@ -1,9 +1,9 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { NavigateFunction } from "react-router-dom";
+
 import { login, register } from "../../services/api/handlers/auth";
 import { me } from "../../services/api/handlers/user";
 import { CreateUserInput, LoginUserInput } from "../../services/validation";
-import { NavigateFunction } from "react-router-dom";
-import { fetchProducts } from "../../services/api/handlers/product";
 
 // Login user action creator
 export const loginUser = createAsyncThunk(
@@ -57,20 +57,6 @@ export const currentUserData = createAsyncThunk(
     } catch (err) {
       console.warn(err);
       return rejectWithValue("Failed to load user");
-    }
-  }
-);
-
-// Fetch products action creator
-export const fetchAllProducts = createAsyncThunk(
-  "products/fetchProducts",
-  async (page: number, { rejectWithValue }) => {
-    try {
-      const response = await fetchProducts(page);
-      return response.data.products;
-    } catch (err) {
-      console.warn(err);
-      return rejectWithValue(err);
     }
   }
 );

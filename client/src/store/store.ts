@@ -1,8 +1,9 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
-import userReducer from "./reducers/UserSlice";
-import productReducer from "./reducers/ProductSlice";
+import userReducer from "./slices/UserSlice";
+import productReducer from "./slices/ProductSlice";
+import chefReducer from "./slices/ChefSlice";
 import {
   FLUSH,
   PAUSE,
@@ -15,6 +16,7 @@ import {
 const rootReducer = combineReducers({
   userReducer,
   productReducer,
+  chefReducer,
 });
 
 const persistConfig = {

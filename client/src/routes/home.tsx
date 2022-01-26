@@ -3,7 +3,7 @@ import MeetChefs from "../components/HomePage/MeetChefs";
 import Menu from "../components/HomePage/Menu";
 import ProductList from "../components/ProductList/ProductList";
 
-const Home = () => {
+function Home() {
   return (
     <Layout title="kotiChefs | Homepage">
       <Menu />
@@ -11,6 +11,6 @@ const Home = () => {
       <ProductList />
     </Layout>
   );
-};
+}
 
 export default Home;

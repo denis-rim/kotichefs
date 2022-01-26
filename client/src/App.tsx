@@ -3,11 +3,15 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 
 import Home from "./routes/home";
-import NotFound from "./routes/404";
+// import LoginPage from "./routes/login";
+// import RegisterPage from "./routes/register";
+// import CreatePage from "./routes/create";
+// import NotFound from "./routes/404";
 
 const LoginPage = React.lazy(() => import("./routes/login"));
 const RegisterPage = React.lazy(() => import("./routes/register"));
 const CreatePage = React.lazy(() => import("./routes/create"));
+const NotFound = React.lazy(() => import("./routes/404"));
 
 function App() {
   return (

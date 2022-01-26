@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { LoginUserInput, loginUserSchema } from "../services/validation";
 import Button from "../components/shared/Button";
 import { useAppDispatch, useAppSelector } from "../hooks/redux";
-import { loginUser } from "../store/reducers/ActionCreators";
+import { loginUser } from "../store/actions/UserActionCreators";
 import { useEffect } from "react";
 
 function LoginPage() {

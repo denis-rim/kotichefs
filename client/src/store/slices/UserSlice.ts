@@ -1,6 +1,10 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { UserModelPublic } from "../../models/UserModel";
-import { currentUserData, loginUser, registerUser } from "./ActionCreators";
+import {
+  currentUserData,
+  loginUser,
+  registerUser,
+} from "../actions/UserActionCreators";
 
 interface UserState {
   user: UserModelPublic | null;

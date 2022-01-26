@@ -5,7 +5,7 @@ import { getPromotedChefsHandler } from "../controller/chef.controller";
 
 const router = express.Router();
 
-// Get all promoted chefs
+// Get all promoted chefs route
 router.get(
   "/promoted",
   validateResource(getChefInputSchema),

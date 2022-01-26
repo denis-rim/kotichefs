@@ -1,6 +1,6 @@
-import { ProductModel } from "../../services/api/handlers/product";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { fetchAllProducts } from "./ActionCreators";
+import { ProductModel } from "../../services/api/handlers/product";
+import { fetchAllProducts } from "../actions/ProductActionCreators";
 
 interface ProductState {
   products: ProductModel[];
