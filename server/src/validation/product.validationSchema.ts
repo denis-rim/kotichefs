@@ -2,9 +2,6 @@ import { object, string, number, TypeOf } from "zod";
 
 const payload = {
   body: object({
-    user: string({
-      required_error: "User is required",
-    }),
     name: string({
       required_error: "Name is required",
     })
@@ -21,11 +18,7 @@ const payload = {
     image: string({
       required_error: "Image is required",
     }),
-    ingredients: string({
-      required_error: "Ingredients is required",
-    })
-      .min(2, "Ingredients must be at least 2 characters long")
-      .max(200, "Ingredients must be at most 200 characters long"),
+    ingredients: string().array(),
   }),
 };
 

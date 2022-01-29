@@ -23,4 +23,5 @@
 | 25.01 | 4     | client          | Worked on client, add 404 page, fetch products                                                                                              |
 | 26.01 | 4     | server / client | Add create page template, ProductCard, and ProductList components, add pagination on product controller, fetch promoted chefs functionality |
 |       | 3     | server / client | Improve chef service, refactor redux actions and slices, on frontend add fetch promoted chefs logic and split to components                 |
-| total | 69    | 
+| 29.01 | 5     | server / client | Refactor Layout ith Outlet component and SEO in all pages, extend Button and styles fixes, product ingredients now array                    |
+| total | 74    | 

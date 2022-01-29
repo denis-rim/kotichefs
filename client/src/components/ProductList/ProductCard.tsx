@@ -18,7 +18,7 @@ function ProductCard({ product }: { product: ProductModel }) {
       </div>
       <div className="pt-10 pb-4 text-center">
         <h3 className="text-sm font-medium text-gray-900">
-          <a href={`/product/${product._id}`}>
+          <a href={`/products/${product._id}`}>
             <span aria-hidden="true" className="absolute inset-0" />
             {product.name}
           </a>

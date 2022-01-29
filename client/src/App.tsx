@@ -3,15 +3,15 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 
 import Home from "./routes/home";
-// import LoginPage from "./routes/login";
-// import RegisterPage from "./routes/register";
-// import CreatePage from "./routes/create";
-// import NotFound from "./routes/404";
+import ProductDetail from "./components/ProductList/ProductDetail";
+import Layout from "./components/Layout/Layout";
 
 const LoginPage = React.lazy(() => import("./routes/login"));
 const RegisterPage = React.lazy(() => import("./routes/register"));
+const ProductsPage = React.lazy(() => import("./routes/products"));
+
 const CreatePage = React.lazy(() => import("./routes/create"));
-const NotFound = React.lazy(() => import("./routes/404"));
+const NotFoundPage = React.lazy(() => import("./routes/404"));
 
 function App() {
   return (
@@ -19,11 +19,18 @@ function App() {
       <Router>
         <React.Suspense fallback={<div>Loading...</div>}>
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="login" element={<LoginPage />} />
-            <Route path="register" element={<RegisterPage />} />
-            <Route path="create" element={<CreatePage />} />
-            <Route path="*" element={<NotFound />} />
+            <Route element={<Layout />}>
+              <Route path="/" element={<Home />} />
+              <Route path="login" element={<LoginPage />} />
+              <Route path="register" element={<RegisterPage />} />
+              <Route path="/products">
+                <Route index element={<ProductsPage />} />
+                <Route path=":productId" element={<ProductDetail />} />
+              </Route>
+
+              <Route path="create" element={<CreatePage />} />
+              <Route path="*" element={<NotFoundPage />} />
+            </Route>
           </Routes>
         </React.Suspense>
       </Router>

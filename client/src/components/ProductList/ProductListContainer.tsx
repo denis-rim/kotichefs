@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import ProductCard from "./ProductCard";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { fetchAllProducts } from "../../store/actions/ProductActionCreators";
+import { Outlet } from "react-router-dom";
 
 function ProductListContainer() {
   const [page, setPage] = React.useState(1);
@@ -26,6 +27,7 @@ function ProductListContainer() {
           ))}
         </div>
       </div>
+      <Outlet/>
     </div>
   );
 }

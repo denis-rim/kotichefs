@@ -27,10 +27,10 @@ export async function createProductHandler(
     const userId = res.locals.user.user;
     const body = req.body;
 
-    // Check if user is have chef status
+    // Check if user is had chef status
     const user = await findUserById(userId);
 
-    // Check if user is have chef or admin status, if not return 403
+    // Check if user is had chef or admin status, if not return 403
     if (user && user.role !== "chef" && user.role !== "admin") {
       return res.status(403).send("You are not allowed to create product");
     }

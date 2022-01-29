@@ -17,6 +17,7 @@ function LoginPage() {
     formState: { errors },
     handleSubmit,
   } = useForm<LoginUserInput>({
+    reValidateMode: "onChange",
     shouldFocusError: true,
     resolver: zodResolver(loginUserSchema),
   });

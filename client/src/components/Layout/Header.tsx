@@ -1,4 +1,5 @@
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { Dialog, Transition } from "@headlessui/react";
 import {
   MenuIcon,
@@ -7,7 +8,6 @@ import {
   UserIcon,
   XIcon,
 } from "@heroicons/react/outline";
-import { Link } from "react-router-dom";
 
 const navigation = {
   categories: [
@@ -76,8 +76,14 @@ const navigation = {
 
 export default function Header() {
   const [open, setOpen] = useState(false);
+  const [homePage, setHomePage] = useState(true);
+  const location = useLocation();
 
-  const user = true;
+  useEffect(() => {
+    if (location.pathname !== "/") {
+      setHomePage(false);
+    }
+  }, [location.pathname]);
 
   return (
     <div className="bg-white z-50">

@@ -1,4 +1,5 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import { useEffect } from "react";
 
 function Menu() {
   return (
@@ -12,7 +13,7 @@ function Menu() {
             CHEFS
           </Link>
           <Link
-            to="/"
+            to="/products"
             className="text-center py-3 px-5 h-max text-gray-500 hover:bg-gray-200 hover:text-gray-700 "
           >
             CHEFS MENU

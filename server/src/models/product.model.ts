@@ -7,7 +7,7 @@ export interface ProductInput extends mongoose.Document {
   price: number;
   description: string;
   image: string;
-  ingredients: string;
+  ingredients: string[];
 }
 
 export interface ProductDocument extends ProductInput, mongoose.Document {
@@ -29,7 +29,7 @@ const productSchema = new mongoose.Schema(
       default:
         "https://i0.wp.com/shahpourpouyan.com/wp-content/uploads/2018/10/orionthemes-placeholder-image-1.png?resize=1024%2C683&ssl=1",
     },
-    ingredients: { type: String, required: true },
+    ingredients: { type: [String], required: true },
     rating: { type: Number, default: 0 },
     reviews: { type: Array, default: [] },
   },

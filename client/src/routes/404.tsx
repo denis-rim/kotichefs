@@ -1,6 +1,6 @@
 import Button from "../components/shared/Button";
 
-function NotFound() {
+function NotFoundPage() {
   return (
     <div className="h-screen">
       <div className="bg-white min-h-full px-4 py-16 sm:px-6 sm:py-24 md:grid md:place-items-center lg:px-8">
@@ -29,4 +29,4 @@ function NotFound() {
   );
 }
 
-export default NotFound;
+export default NotFoundPage;

@@ -7,7 +7,7 @@ export interface ProductModel {
   price: number;
   description: string;
   image: string;
-  ingredients: string;
+  ingredients: string[];
   rating: number;
   reviews: any[];
   createdAt: string;
@@ -21,4 +21,8 @@ interface ProductResponse {
 
 export function fetchProducts(page: number) {
   return api.get<null, { data: ProductResponse }>(`/products?page=${page}`);
+}
+
+export function fetchProduct(id: string) {
+  return api.get<null, { data: ProductModel }>(`/products/${id}`);
 }

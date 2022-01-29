@@ -82,7 +82,7 @@ const userSchema = new mongoose.Schema(
     },
     city: { type: String, required: true, default: "Helsinki" },
     orders: { type: [String], default: [] },
-    products: { type: [String], default: [] },
+    products: { type: [mongoose.Schema.Types.ObjectId], ref: "Product" },
     cuisine: { type: [String], default: [] },
     promoted: { type: Boolean, default: false },
     about: { type: String, default: "" },
