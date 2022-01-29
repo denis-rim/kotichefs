@@ -33,9 +33,8 @@ function Button({
   const styles = {
     button:
       "w-full flex justify-center border border-transparent rounded-md shadow-sm text-sm font-medium",
-    primary: "py-2 px-4 text-white bg-yellow-500 hover:bg-yellow-600",
-    primaryBig:
-      "py-3 px-8 text-medium text-white bg-yellow-500 hover:bg-yellow-600",
+    primary: "py-2 px-4 bg-yellow-400 hover:bg-yellow-500",
+    primaryBig: "py-3 px-8 text-medium  bg-yellow-400 hover:bg-yellow-500",
     secondary: "py-2 px-4 text-gray-700 bg-gray-100 hover:bg-gray-300",
     secondaryBig:
       "py-3 px-8 text-medium text-gray-700 bg-gray-100 hover:bg-gray-300",

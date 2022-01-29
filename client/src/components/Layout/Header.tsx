@@ -8,6 +8,8 @@ import {
   UserIcon,
   XIcon,
 } from "@heroicons/react/outline";
+import { useAppSelector } from "../../hooks/redux";
+import Button from "../shared/Button";
 
 const navigation = {
   categories: [
@@ -75,9 +77,12 @@ const navigation = {
 };
 
 export default function Header() {
+  const { user } = useAppSelector((state) => state.userReducer);
+
+  const location = useLocation();
+
   const [open, setOpen] = useState(false);
   const [homePage, setHomePage] = useState(true);
-  const location = useLocation();
 
   useEffect(() => {
     if (location.pathname !== "/") {
@@ -162,7 +167,6 @@ export default function Header() {
           </Transition.Child>
         </Dialog>
       </Transition.Root>
-
       {/* Desktop menu */}
       <header className="relative">
         <nav aria-label="Top">
@@ -220,15 +224,30 @@ export default function Header() {
                         </a>
                       </div>
 
-                      <div className="flex">
-                        <Link
-                          to="/login"
-                          className="-m-2 p-2 text-gray-600 hover:text-gray-800"
-                        >
-                          <span className="sr-only">Account</span>
-                          <UserIcon className="w-6 h-6" aria-hidden="true" />
-                        </Link>
-                      </div>
+                      {user ? (
+                        <div className="flex">
+                          <Link
+                            to="/account"
+                            className="-m-2 p-2 text-gray-600 hover:text-gray-800"
+                          >
+                            <span className="sr-only">Account</span>
+                            <UserIcon className="w-6 h-6" aria-hidden="true" />
+                          </Link>
+                        </div>
+                      ) : (
+                        <>
+                          <div className="flex">
+                            <Button appearance="primary-big" href="/login">
+                              Login
+                            </Button>
+                          </div>
+                          <div className="flex">
+                            <Button appearance="secondary-big" href="/register">
+                              Register
+                            </Button>
+                          </div>
+                        </>
+                      )}
                     </div>
 
                     <span
@@ -237,7 +256,10 @@ export default function Header() {
                     />
 
                     <div className="flow-root">
-                      <a href="#" className="group -m-2 p-2 flex items-center">
+                      <Link
+                        to="/cart"
+                        className="group -m-2 p-2 flex items-center"
+                      >
                         <ShoppingCartIcon
                           className="flex-shrink-0 h-6 w-6 text-gray-600 group-hover:text-gray-800"
                           aria-hidden="true"
@@ -246,7 +268,7 @@ export default function Header() {
                           0
                         </span>
                         <span className="sr-only">items in cart, view bag</span>
-                      </a>
+                      </Link>
                     </div>
                   </div>
                 </div>
@@ -255,7 +277,6 @@ export default function Header() {
           </div>
         </nav>
       </header>
-
       <div className="w-screen  pb-8 pt-4 px-2 left-0 bg-yellow-300 sm:pb-16">
         <div className="max-w-7xl mx-auto relative">
           <h1 className="text-3xl tracking-tight font-extrabold text-gray-900 sm:text-4xl md:text-5xl">
