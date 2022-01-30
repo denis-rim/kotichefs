@@ -1,4 +1,5 @@
 
+
 # working time accounting
 
 |  day  | hours | where           | done                                                                                                                                        |
@@ -24,4 +25,5 @@
 | 26.01 | 4     | server / client | Add create page template, ProductCard, and ProductList components, add pagination on product controller, fetch promoted chefs functionality |
 |       | 3     | server / client | Improve chef service, refactor redux actions and slices, on frontend add fetch promoted chefs logic and split to components                 |
 | 29.01 | 5     | server / client | Refactor Layout ith Outlet component and SEO in all pages, extend Button and styles fixes, product ingredients now array                    |
-| total | 74    | 
+| 30.01 | 3     | server / client | Fix getProductHandler, product validation: name max length set to 30 characters. Add Footer, Search components, refactor ProductList        |
+| total | 77    | 

@@ -1,5 +1,5 @@
 import { Fragment, useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, Location, useLocation } from "react-router-dom";
 import { Dialog, Transition } from "@headlessui/react";
 import {
   MenuIcon,
@@ -79,19 +79,12 @@ const navigation = {
 export default function Header() {
   const { user } = useAppSelector((state) => state.userReducer);
 
+  const [open, setOpen] = useState(false);
+
   const location = useLocation();
 
-  const [open, setOpen] = useState(false);
-  const [homePage, setHomePage] = useState(true);
-
-  useEffect(() => {
-    if (location.pathname !== "/") {
-      setHomePage(false);
-    }
-  }, [location.pathname]);
-
   return (
-    <div className="bg-white z-50">
+    <div className="bg-white z-50 pb-4">
       {/* Mobile menu */}
       <Transition.Root show={open} as={Fragment}>
         <Dialog
@@ -171,7 +164,7 @@ export default function Header() {
       <header className="relative">
         <nav aria-label="Top">
           <div className="bg-yellow-300">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 lg:pb-5">
               <div className="h-16 flex items-center justify-between">
                 <div className="hidden lg:flex lg:items-center">
                   <Link to="/">
@@ -273,20 +266,22 @@ export default function Header() {
                   </div>
                 </div>
               </div>
+              {location.pathname === "/" ? (
+                <div className="pb-8 pt-4 px-2 left-0 bg-yellow-300 sm:pb-10">
+                  <div className="max-w-7xl mx-auto relative">
+                    <h1 className="text-3xl tracking-tight font-extrabold text-gray-900 sm:text-4xl md:text-5xl">
+                      <span className="block xl:inline">Powered by Chefs</span>
+                      <p className="block text-2xl font-thin sm:text-3xl md:text-4xl">
+                        All The Food Experiences. All In One Place.
+                      </p>
+                    </h1>
+                  </div>
+                </div>
+              ) : null}
             </div>
           </div>
         </nav>
       </header>
-      <div className="w-screen  pb-8 pt-4 px-2 left-0 bg-yellow-300 sm:pb-16">
-        <div className="max-w-7xl mx-auto relative">
-          <h1 className="text-3xl tracking-tight font-extrabold text-gray-900 sm:text-4xl md:text-5xl">
-            <span className="block xl:inline">Powered by Chefs</span>
-            <p className="block text-2xl font-thin sm:text-3xl md:text-4xl">
-              All The Food Experiences. All In One Place.
-            </p>
-          </h1>
-        </div>
-      </div>
     </div>
   );
 }

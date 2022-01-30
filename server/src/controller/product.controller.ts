@@ -112,7 +112,7 @@ export async function getProductHandler(
     const productId = req.params.productId;
 
     // Get product
-    const product = await findProduct({ productId });
+    const product = await findProduct({ _id: productId });
 
     // If product not found return 404
     if (!product) {

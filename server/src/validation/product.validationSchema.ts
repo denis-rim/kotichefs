@@ -6,7 +6,7 @@ const payload = {
       required_error: "Name is required",
     })
       .min(2, "Name must be at least 2 characters long")
-      .max(25, "Name must be at most 25 characters long"),
+      .max(30, "Name must be at most 30 characters long"),
     description: string({
       required_error: "Description is required",
     })

@@ -1,9 +1,11 @@
-import { Link, useLocation } from "react-router-dom";
-import { useEffect } from "react";
+import { Link } from "react-router-dom";
+import Search from "../Layout/Search";
 
 function Menu() {
   return (
-    <div className="bg-gray-50 hidden rounded-3xl relative -top-6 shadow md:block ">
+    <div
+      className={`bg-gray-50 hidden rounded-3xl relative -top-10  shadow lg:block`}
+    >
       <div className="flex justify-between content-center">
         <div className="flex justify-start">
           <Link
@@ -32,7 +34,9 @@ function Menu() {
           </Link>
         </div>
 
-        <div>search</div>
+        <div className="flex justify-center mr-3">
+          <Search />
+        </div>
       </div>
     </div>
   );
