@@ -1,5 +1,7 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { StarIcon } from "@heroicons/react/solid";
+
 import { ProductModel } from "../../services/api/handlers/product";
 
 function classNames(...classes: string[]) {
@@ -18,10 +20,10 @@ function ProductCard({ product }: { product: ProductModel }) {
       </div>
       <div className="pt-10 pb-4 text-center">
         <h3 className="text-sm font-medium text-gray-900">
-          <a href={`/products/${product._id}`}>
+          <Link to={`/products/${product._id}`}>
             <span aria-hidden="true" className="absolute inset-0" />
             {product.name}
-          </a>
+          </Link>
         </h3>
         <div className="mt-3 flex flex-col items-center">
           <p className="sr-only">{product.rating} out of 5 stars</p>

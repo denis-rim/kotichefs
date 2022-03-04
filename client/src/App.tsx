@@ -3,13 +3,14 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 
 import Home from "./routes/home";
-import Layout from "./components/Layout/Layout";
 import AllChefs from "./routes/all-chefs";
+import ProductsPage from "./routes/products";
+import ProductPage from "./routes/product";
+
+import Layout from "./components/Layout/Layout";
 
 const LoginPage = React.lazy(() => import("./routes/login"));
 const RegisterPage = React.lazy(() => import("./routes/register"));
-const ProductPage = React.lazy(() => import("./routes/product"));
-const ProductsPage = React.lazy(() => import("./routes/products"));
 const CreatePage = React.lazy(() => import("./routes/create"));
 const NotFoundPage = React.lazy(() => import("./routes/404"));
 
@@ -22,7 +23,7 @@ function App() {
             <Route element={<Layout />}>
               <Route path="/" element={<Home />} />
 
-               {/*Auth routes */}
+              {/*Auth routes */}
               <Route path="login" element={<LoginPage />} />
               <Route path="register" element={<RegisterPage />} />
 
@@ -32,7 +33,7 @@ function App() {
                 <Route path=":productId" element={<ProductPage />} />
               </Route>
 
-              <Route path='chefs' element={<AllChefs/>} />
+              <Route path="chefs" element={<AllChefs />} />
 
               {/* Chefs routes */}
               <Route path="create" element={<CreatePage />} />
