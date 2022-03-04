@@ -1,15 +1,17 @@
+import React from 'react'
+
 import { useParams, useNavigate } from "react-router-dom";
 import { getInvoice, deleteInvoice } from "../data";
 
 export default function Invoice() {
-  let navigate = useNavigate();
-  let params = useParams();
+  const navigate = useNavigate();
+  const params = useParams();
 
   if (!params.invoiceId) {
     return <div>No invoice id</div>;
   }
 
-  let invoice = getInvoice(parseInt(params.invoiceId, 10));
+  const invoice = getInvoice(parseInt(params.invoiceId, 10));
 
   if (!invoice) {
     return <div>Invoice not found</div>;
@@ -25,7 +27,6 @@ export default function Invoice() {
       <p>
         <button
           onClick={() => {
-            // @ts-ignore
             deleteInvoice(invoice.number);
             navigate("/invoices");
           }}

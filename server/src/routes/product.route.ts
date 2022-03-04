@@ -11,7 +11,7 @@ import {
   createProductHandler,
   deleteProductHandler,
   getAllProductsHandler,
-  getProductHandler,
+  getProductByIdHandler,
   updateProductHandler,
 } from "../controller/product.controller";
 import requireUser from "../middleware/requireUser";
@@ -25,7 +25,7 @@ router.get("/", validateResource(getAllProductSchema), getAllProductsHandler);
 router.get(
   "/:productId",
   validateResource(getProductSchema),
-  getProductHandler
+  getProductByIdHandler
 );
 
 // Create product route

@@ -5,15 +5,13 @@ import { Link } from "react-router-dom";
 interface HeaderButtonProps {
   appearance?: "primary" | "secondary";
   href: string;
-  isActive?: boolean;
   className?: string;
   children: React.ReactNode;
 }
 
-export default function HeaderButton({
+function HeaderButton({
   appearance = "primary",
   href,
-  isActive,
   className,
   children,
   ...props
@@ -39,3 +37,6 @@ export default function HeaderButton({
     </Link>
   );
 }
+
+
+export default HeaderButton

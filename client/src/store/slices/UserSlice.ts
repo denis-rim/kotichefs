@@ -1,13 +1,13 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { UserModelPublic } from "../../models/UserModel";
 import {
   currentUserData,
   loginUser,
   registerUser,
 } from "../actions/UserActionCreators";
+import {PublicUser} from "../../models/UserModel";
 
 interface UserState {
-  user: UserModelPublic | null;
+  user: PublicUser | null;
   isLoggedIn: boolean;
   isLoading: boolean;
   error: string;
@@ -27,7 +27,7 @@ export const userSlice = createSlice({
   extraReducers: {
     [currentUserData.fulfilled.type]: (
       state,
-      action: PayloadAction<UserModelPublic>
+      action: PayloadAction<PublicUser>
     ) => {
       state.isLoading = false;
       state.error = "";
@@ -43,7 +43,7 @@ export const userSlice = createSlice({
     },
     [loginUser.fulfilled.type]: (
       state,
-      action: PayloadAction<UserModelPublic>
+      action: PayloadAction<PublicUser>
     ) => {
       state.user = action.payload;
       state.isLoggedIn = true;
@@ -61,7 +61,7 @@ export const userSlice = createSlice({
     },
     [registerUser.fulfilled.type]: (
       state,
-      action: PayloadAction<UserModelPublic>
+      action: PayloadAction<PublicUser>
     ) => {
       state.user = action.payload;
       state.isLoggedIn = true;

@@ -1,5 +1,5 @@
-import { StarIcon } from "@heroicons/react/solid";
 import React from "react";
+import { StarIcon } from "@heroicons/react/solid";
 import { ProductModel } from "../../services/api/handlers/product";
 
 function classNames(...classes: string[]) {
@@ -40,7 +40,7 @@ function ProductCard({ product }: { product: ProductModel }) {
           <p className="mt-1 text-sm text-gray-500">3 reviews</p>
         </div>
         <p className="mt-4 text-base font-medium text-gray-900">
-          {product.price}
+          {product.price} EUR
         </p>
       </div>
     </div>

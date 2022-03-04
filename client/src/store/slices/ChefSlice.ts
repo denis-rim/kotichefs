@@ -1,10 +1,10 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { ChefModel } from "../../services/api/handlers/chef";
 import { getPromotedChefs } from "../actions/ChefActionCreators";
+import {PublicChef} from "../../models/UserModel";
 
 interface ChefSlice {
-  promotedChefs: ChefModel[];
-  chefs: ChefModel[];
+  promotedChefs: PublicChef[];
+  chefs: PublicChef[];
   isLoading: boolean;
   error: string;
 }
@@ -21,23 +21,12 @@ export const chefSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: {
-    // [fetchChefs.pending]: (state) => {
-    //     state.isLoading = true;
-    // },
-    // [fetchChefs.fulfilled]: (state, action) => {
-    //     state.chefs = action.payload;
-    //     state.isLoading = false;
-    // },
-    // [fetchChefs.rejected]: (state, action) => {
-    //     state.error = action.error.message;
-    //     state.isLoading = false;
-    // },
     [getPromotedChefs.pending.type]: (state) => {
       state.isLoading = true;
     },
     [getPromotedChefs.fulfilled.type]: (
       state,
-      action: PayloadAction<ChefModel[]>
+      action: PayloadAction<PublicChef[]>
     ) => {
       state.promotedChefs = action.payload;
       state.isLoading = false;

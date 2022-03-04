@@ -1,4 +1,4 @@
-import Layout from "../components/Layout/Layout";
+import React from 'react'
 
 function CreatePage() {
   return (

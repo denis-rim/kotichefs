@@ -1,26 +1,44 @@
-export interface UserModelPublic {
-  id: string;
-  fullName: string;
-  photo_url: string;
-  verified: boolean;
-  role: string;
-  isAdmin: boolean;
+export enum UserRole {
+  User = "user",
+  Chef = "chef",
+  Admin = "admin",
 }
 
-export interface UserModelPrivate {
-  id: string;
+interface UserBaseEntry {
+  _id: string;
+  username: string;
   fullName: string;
   email: string;
   city: string;
   photo_url: string;
-  role: string;
-  orders: [];
-  products: [];
-  cosine: [];
-  promoted: [];
+  role: UserRole;
   about: string;
   phone: string;
-  rating: number;
   verified: boolean;
   isAdmin: boolean;
+  orders: string[];
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export type PublicUser = Pick<
+  UserBaseEntry,
+  "_id" | "username" | "fullName" | "city" | "photo_url" | "role"
+>;
+
+export type PrivateUser = Omit<
+  UserBaseEntry,
+  "products" | "promoted" | "rating"
+>;
+
+export interface PublicChef extends UserBaseEntry {
+  products: string[];
+  cuisine: string[];
+  promoted: boolean;
+  rating: number;
+}
+
+export interface PrivateChef extends UserBaseEntry {
+  promoted: boolean;
+  rating: number;
 }

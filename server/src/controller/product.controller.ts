@@ -104,7 +104,7 @@ export async function getAllProductsHandler(
   }
 }
 
-export async function getProductHandler(
+export async function getProductByIdHandler(
   req: Request<GetProductInput>,
   res: Response<unknown, MyResponseLocals>
 ) {

@@ -9,7 +9,7 @@ export interface ProductModel {
   image: string;
   ingredients: string[];
   rating: number;
-  reviews: any[];
+  reviews: string[];
   createdAt: string;
   updatedAt: string;
 }

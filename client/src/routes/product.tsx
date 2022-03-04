@@ -1,22 +1,12 @@
-import { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { StarIcon } from "@heroicons/react/solid";
 import { Tab } from "@headlessui/react";
-import { useParams } from "react-router-dom";
+
 import { fetchProduct, ProductModel } from "../services/api/handlers/product";
+
 import Button from "../components/shared/Button";
 
-// const product = {
-//   name: "Application UI Icon Pack",
-//   version: { name: "1.0", date: "June 5, 2021", datetime: "2021-06-05" },
-//   price: "$220",
-//   description:
-//     "The Application UI Icon Pack comes with over 200 icons in 3 styles: outline, filled, and branded. This playful icon pack is tailored for complex application user interfaces with a friendly and legible look.",
-//   highlights: ["Salt", "Water", "Oil"],
-//   imageSrc:
-//     "https://tailwindui.com/img/ecommerce-images/product-page-05-product-01.jpg",
-//   imageAlt:
-//     "Sample of 30 icons with friendly and fun details in outline, filled, and brand color styles.",
-// };
 const reviews = {
   average: 4,
   featured: [
@@ -65,23 +55,33 @@ function classNames(...classes: string[]) {
 
 function ProductPage() {
   const [product, setProduct] = useState<ProductModel | null>(null);
-  const { productId } = useParams();
+  const { productId } = useParams<{ productId: string | undefined }>();
 
   useEffect(() => {
-    getProductById();
+    let isIgnoreResponse = false;
+
+    async function getProductById() {
+      if (productId) {
+        try {
+          const response = await fetchProduct(productId);
+
+          if (!isIgnoreResponse) {
+            setProduct(response.data);
+          }
+        } catch (err) {
+          console.warn(err);
+        }
+      }
+    }
+
+    void getProductById();
+
+    return () => {
+      isIgnoreResponse = true;
+    };
   }, [productId]);
 
-  async function getProductById() {
-    if (productId) {
-      const response = await fetchProduct(productId);
-      console.log(response);
-      setProduct(response.data);
-    } else return {};
-  }
-
-  if (!product) {
-    return <div>No Data</div>;
-  }
+  if (!product) return <div>Error loading product...</div>;
 
   return (
     <div className="bg-white">
@@ -93,7 +93,7 @@ function ProductPage() {
             <div className="aspect-w-4 aspect-h-3 rounded-lg bg-gray-100 overflow-hidden">
               <img
                 src={product.image}
-                alt={`${product.name} photo`}
+                alt={product.name}
                 className="object-center object-cover"
               />
             </div>
@@ -144,7 +144,7 @@ function ProductPage() {
             <div className="border-t border-gray-200 mt-10 pt-10">
               <h3 className="text-sm font-medium text-gray-900">Ingredients</h3>
               <div className="mt-4 prose prose-sm text-gray-500">
-                <ul role="list">
+                <ul>
                   {product.ingredients.map((ingredient) => (
                     <li key={ingredient}>{ingredient}</li>
                   ))}

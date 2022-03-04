@@ -1,13 +1,6 @@
-import { api } from "../apiClient";
-
-export interface ChefModel {
-  _id: string;
-  fullName: string;
-  photo_url: string;
-  cuisine: string[];
-  about: string;
-}
+import { PublicChef} from '../../../models/UserModel';
+import { api } from '../apiClient';
 
 export function fetchPromotedChefs() {
-  return api.get<null, { data: ChefModel }>("/chefs/promoted");
+  return api.get<null, { data: PublicChef }>('/chefs/promoted');
 }

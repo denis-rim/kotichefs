@@ -1,4 +1,4 @@
-import { SVGProps } from "react";
+import React, { SVGProps } from "react";
 import Button from "../shared/Button";
 
 const navigation = {

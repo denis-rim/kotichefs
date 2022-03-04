@@ -1,4 +1,5 @@
-import { useEffect } from "react";
+
+import React, { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { getPromotedChefs } from "../../store/actions/ChefActionCreators";
 import ChefCard from "./ChefCard";
