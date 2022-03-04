@@ -4,6 +4,7 @@ import { HelmetProvider } from "react-helmet-async";
 
 import Home from "./routes/home";
 import Layout from "./components/Layout/Layout";
+import AllChefs from "./routes/all-chefs";
 
 const LoginPage = React.lazy(() => import("./routes/login"));
 const RegisterPage = React.lazy(() => import("./routes/register"));
@@ -20,13 +21,20 @@ function App() {
           <Routes>
             <Route element={<Layout />}>
               <Route path="/" element={<Home />} />
+
+               {/*Auth routes */}
               <Route path="login" element={<LoginPage />} />
               <Route path="register" element={<RegisterPage />} />
+
+              {/* Product routes */}
               <Route path="products">
                 <Route index element={<ProductsPage />} />
                 <Route path=":productId" element={<ProductPage />} />
               </Route>
 
+              <Route path='chefs' element={<AllChefs/>} />
+
+              {/* Chefs routes */}
               <Route path="create" element={<CreatePage />} />
               <Route path="*" element={<NotFoundPage />} />
             </Route>

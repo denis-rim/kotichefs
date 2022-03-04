@@ -10,7 +10,7 @@ function Menu() {
       <div className="flex justify-between content-center">
         <div className="flex justify-start">
           <Link
-            to="/"
+            to="/chefs"
             className="text-center py-3 px-5 h-max text-gray-500 hover:bg-gray-200 hover:text-gray-700 sm:rounded-tl-3xl sm:rounded-bl-3xl"
           >
             CHEFS

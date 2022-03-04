@@ -1,6 +1,6 @@
-import React from 'react'
+import React from "react";
 import { Fragment, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Dialog, Transition } from "@headlessui/react";
 import {
   MenuIcon,
@@ -9,7 +9,9 @@ import {
   UserIcon,
   XIcon,
 } from "@heroicons/react/outline";
+
 import { useAppSelector } from "../../hooks/redux";
+
 import Button from "../shared/Button";
 
 const navigation = {
@@ -81,8 +83,6 @@ export default function Header() {
   const { user } = useAppSelector((state) => state.userReducer);
 
   const [open, setOpen] = useState(false);
-
-  const location = useLocation();
 
   return (
     <div className="bg-white z-50 pb-4">
@@ -176,7 +176,7 @@ export default function Header() {
                   </Link>
                 </div>
 
-                {/* Mobile enu and search (lg-) */}
+                {/* Mobile menu and search (lg-) */}
                 <div className="flex-1 flex items-center lg:hidden">
                   <button
                     type="button"
@@ -267,18 +267,17 @@ export default function Header() {
                   </div>
                 </div>
               </div>
-              {location.pathname === "/" ? (
-                <div className="pb-8 pt-4 px-2 left-0 bg-yellow-300 sm:pb-10">
-                  <div className="max-w-7xl mx-auto relative">
-                    <h1 className="text-3xl tracking-tight font-extrabold text-gray-900 sm:text-4xl md:text-5xl">
-                      <span className="block xl:inline">Powered by Chefs</span>
-                      <p className="block text-2xl font-thin sm:text-3xl md:text-4xl">
-                        All The Food Experiences. All In One Place.
-                      </p>
-                    </h1>
-                  </div>
+
+              <div className="pb-8 pt-4 px-2 left-0 bg-yellow-300 sm:pb-10">
+                <div className="max-w-7xl mx-auto relative">
+                  <h1 className="text-3xl tracking-tight font-extrabold text-gray-900 sm:text-4xl md:text-5xl">
+                    <span className="block xl:inline">Powered by Chefs</span>
+                    <p className="block text-2xl font-thin sm:text-3xl md:text-4xl">
+                      All The Food Experiences. All In One Place.
+                    </p>
+                  </h1>
                 </div>
-              ) : null}
+              </div>
             </div>
           </div>
         </nav>
