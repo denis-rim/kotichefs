@@ -1,16 +1,24 @@
-
 import React, { useEffect } from "react";
+
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { getPromotedChefs } from "../../store/actions/ChefActionCreators";
+
 import ChefCard from "./ChefCard";
+import Spinner from "../Spinner/Spinner";
 
 function MeetChefs() {
   const dispatch = useAppDispatch();
-  const { promotedChefs } = useAppSelector((state) => state.chefReducer);
+  const { promotedChefs, isLoading } = useAppSelector(
+    (state) => state.chefReducer
+  );
 
   useEffect(() => {
     dispatch(getPromotedChefs());
   }, [dispatch]);
+
+  if (isLoading) {
+    return <Spinner />;
+  }
 
   return (
     <div className="bg-white">

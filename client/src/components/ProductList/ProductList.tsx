@@ -1,19 +1,30 @@
-import React, { useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "../../hooks/redux";
-import { fetchAllProducts } from "../../store/actions/ProductActionCreators";
-import ProductCard from "../ProductCard/ProductCard";
+import React, { useEffect, useState } from "react";
 import { Link, Outlet } from "react-router-dom";
+
 import { ProductModel } from "../../services/api/handlers/product";
 
+import { useAppDispatch, useAppSelector } from "../../hooks/redux";
+import { fetchAllProducts } from "../../store/actions/ProductActionCreators";
+
+import ProductCard from "../ProductCard/ProductCard";
+import Spinner from "../Spinner/Spinner";
+
 function ProductList() {
-  const [page, setPage] = React.useState(1);
-  const [pageCount, setPageCount] = React.useState(0);
   const dispatch = useAppDispatch();
-  const { products } = useAppSelector((state) => state.productReducer);
+  const { products, isLoading } = useAppSelector(
+    (state) => state.productReducer
+  );
+
+  const [page, setPage] = useState(1);
+  const [pageCount, setPageCount] = useState(0);
 
   useEffect(() => {
     dispatch(fetchAllProducts(page));
   }, [dispatch]);
+
+  if (isLoading) {
+    return <Spinner />;
+  }
 
   return (
     <>
