@@ -5,10 +5,10 @@ import { classNames } from "../../utils/utils";
 
 function Rating({
   rating,
-  withNumOfReview = false,
+  withReview = false,
 }: {
   rating: number;
-  withNumOfReview?: boolean;
+  withReview?: boolean;
 }) {
   return (
     <div className="mt-3 flex flex-col items-center">
@@ -25,9 +25,7 @@ function Rating({
           />
         ))}
       </div>
-      {withNumOfReview && (
-        <p className="mt-1 text-sm text-gray-500">3 reviews</p>
-      )}
+      {withReview && <p className="mt-1 text-sm text-gray-500">3 reviews</p>}
     </div>
   );
 }

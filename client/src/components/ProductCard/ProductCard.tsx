@@ -8,7 +8,7 @@ import Rating from "../shared/Rating";
 function ProductCard({ product }: { product: ProductModel }) {
   return (
     <ProductCardComponent product={product}>
-      <Rating rating={product.rating} withNumOfReview={true} />
+      <Rating rating={product.rating} withReview={true} />
     </ProductCardComponent>
   );
 }
