@@ -2,10 +2,13 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Link, useNavigate } from "react-router-dom";
-import { CreateUserInput, createUserSchema } from "../services/validation";
-import Button from "../components/shared/Button";
-import { useAppDispatch } from "../hooks/redux";
+
 import { registerUser } from "../store/actions/UserActionCreators";
+import { useAppDispatch } from "../hooks/redux";
+
+import { CreateUserInput, createUserSchema } from "../services/validation";
+
+import Button from "../components/shared/Button";
 
 function RegisterPage() {
   const navigate = useNavigate();
