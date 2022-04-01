@@ -6,7 +6,7 @@ import Spinner from "../components/Spinner/Spinner";
 import ChefCard from "../components/HomePage/ChefCard";
 import { getChefs } from "../store/actions/ChefActionCreators";
 
-function AllChefs() {
+function AllChefsPage() {
   const dispatch = useAppDispatch();
   const { chefs, isLoading } = useAppSelector((state) => state.chefReducer);
 
@@ -35,4 +35,4 @@ function AllChefs() {
   );
 }
 
-export default AllChefs;
+export default AllChefsPage;

@@ -1,7 +1,7 @@
-import React from 'react'
+import React from "react";
 import { Link } from "react-router-dom";
 
-import {PublicChef} from "../../models/UserModel";
+import { PublicChef } from "../../models/UserModel";
 
 function ChefCard({ chef }: { chef: PublicChef }) {
   return (
@@ -16,7 +16,7 @@ function ChefCard({ chef }: { chef: PublicChef }) {
       <div className="mt-2 flex justify-start">
         <div>
           <h3 className="text-lg font-bold text-gray-700">
-            <Link to={`/chef/${chef._id}`}>
+            <Link to={`/chefs/${chef._id}`}>
               <span aria-hidden="true" className="absolute inset-0" />
               {chef.fullName}
             </Link>

@@ -1,16 +1,16 @@
-import React from 'react'
+import React from "react";
 import MeetChefs from "../components/HomePage/MeetChefs";
 import SEO from "../components/Layout/SEO";
 import ProductList from "../components/ProductList/ProductList";
 
-function Home() {
+function HomePage() {
   return (
     <>
-      <SEO title="kotiChefs | Home" />
+      <SEO title="kotiChefs | HomePage" />
       <MeetChefs />
       <ProductList />
     </>
   );
 }
 
-export default Home;
+export default HomePage;

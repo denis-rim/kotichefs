@@ -2,16 +2,17 @@ import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 
-import Home from "./routes/home";
-import AllChefs from "./routes/all-chefs";
-import ProductsPage from "./routes/products";
-import ProductPage from "./routes/product";
+import HomePage from "./routes/home-page";
+import AllChefsPage from "./routes/all-chefs-page";
+import ChefPage from "./routes/chef-page";
+import ProductsPage from "./routes/products-page";
+import ProductPage from "./routes/product-page";
 
 import Layout from "./components/Layout/Layout";
 
-const LoginPage = React.lazy(() => import("./routes/login"));
-const RegisterPage = React.lazy(() => import("./routes/register"));
-const CreatePage = React.lazy(() => import("./routes/create"));
+const LoginPage = React.lazy(() => import("./routes/login-page"));
+const RegisterPage = React.lazy(() => import("./routes/register-page"));
+const CreatePage = React.lazy(() => import("./routes/create-page"));
 const NotFoundPage = React.lazy(() => import("./routes/404"));
 
 function App() {
@@ -21,7 +22,7 @@ function App() {
         <React.Suspense fallback={<div>Loading...</div>}>
           <Routes>
             <Route element={<Layout />}>
-              <Route path="/" element={<Home />} />
+              <Route path="/" element={<HomePage />} />
 
               {/*Auth routes */}
               <Route path="login" element={<LoginPage />} />
@@ -33,9 +34,13 @@ function App() {
                 <Route path=":productId" element={<ProductPage />} />
               </Route>
 
-              <Route path="chefs" element={<AllChefs />} />
+              {/* Chef public routes */}
+              <Route path="chefs">
+                <Route index element={<AllChefsPage />} />
+                <Route path=":chefId" element={<ChefPage />} />
+              </Route>
 
-              {/* Chefs routes */}
+              {/* Chefs private routes */}
               <Route path="create" element={<CreatePage />} />
               <Route path="*" element={<NotFoundPage />} />
             </Route>
