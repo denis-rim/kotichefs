@@ -26,4 +26,7 @@
 |       | 3     | server / client | Improve chef service, refactor redux actions and slices, on frontend add fetch promoted chefs logic and split to components                 |
 | 29.01 | 5     | server / client | Refactor Layout ith Outlet component and SEO in all pages, extend Button and styles fixes, product ingredients now array                    |
 | 30.01 | 3     | server / client | Fix getProductHandler, product validation: name max length set to 30 characters. Add Footer, Search components, refactor ProductList        |
-| total | 77    | 
+| 04.03 | 3     | server / client | Refactor                                                                                                                                    |
+| 05.03 | 1     | client          | Refactor components, add Spinner and Rating components                                                                                      |
+| 01.04 | 4     | client          | Start removing tailwind, build Chef page markup and styles, fix Chef models                                                                 |
+| total | 86    | 

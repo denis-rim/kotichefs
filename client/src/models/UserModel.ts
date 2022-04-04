@@ -31,14 +31,14 @@ export type PrivateUser = Omit<
   "products" | "promoted" | "rating"
 >;
 
-export interface PublicChef extends UserBaseEntry {
+export interface PublicChefModel extends UserBaseEntry {
   products: string[];
   cuisine: string[];
   promoted: boolean;
   rating: number;
 }
 
-export interface PrivateChef extends UserBaseEntry {
+export interface PrivateChefModel extends UserBaseEntry {
   promoted: boolean;
   rating: number;
 }

@@ -1,10 +1,10 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { getChefs, getPromotedChefs } from "../actions/ChefActionCreators";
-import { PublicChef } from "../../models/UserModel";
+import { PublicChefModel } from "../../models/UserModel";
 
 interface ChefSlice {
-  promotedChefs: PublicChef[];
-  chefs: PublicChef[];
+  promotedChefs: PublicChefModel[];
+  chefs: PublicChefModel[];
   isLoading: boolean;
   error: null | string;
 }
@@ -26,7 +26,7 @@ export const chefSlice = createSlice({
     },
     [getPromotedChefs.fulfilled.type]: (
       state,
-      action: PayloadAction<PublicChef[]>
+      action: PayloadAction<PublicChefModel[]>
     ) => {
       state.promotedChefs = action.payload;
       state.isLoading = false;
@@ -38,7 +38,10 @@ export const chefSlice = createSlice({
     [getChefs.pending.type]: (state) => {
       state.isLoading = true;
     },
-    [getChefs.fulfilled.type]: (state, action: PayloadAction<PublicChef[]>) => {
+    [getChefs.fulfilled.type]: (
+      state,
+      action: PayloadAction<PublicChefModel[]>
+    ) => {
       state.chefs = action.payload;
       state.isLoading = false;
     },

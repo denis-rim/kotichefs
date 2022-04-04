@@ -1,0 +1,138 @@
+/* Chef details */
+.pageContainer {
+  display: flex;
+  margin-bottom: var(--spacing-xl);
+}
+
+.imageContainerWrapper {
+  max-width: 350px;
+  max-height: 350px;
+  aspect-ratio: 1/1;
+  margin-right: var(--spacing-l);
+}
+
+.avatarImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.aboutWrapper {
+  align-self: flex-end;
+}
+
+.title {
+  font-size: var(--font-size-xxl);
+  font-weight: var(--font-bold);
+  letter-spacing: 0.1rem;
+}
+
+.about {
+  font-size: var(--font-size-m);
+  font-weight: var(--font-medium);
+  letter-spacing: 0.1rem;
+}
+
+.detailsContainer {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: var(--spacing-xl);
+}
+
+.storeText {
+  font-size: var(--font-size-l);
+  font-weight: var(--font-semi-bold);
+  letter-spacing: 0.1rem;
+  margin-bottom: var(--spacing-m);
+}
+
+/* Tag */
+.tagsContainer {
+  display: flex;
+  margin-bottom: var(--spacing-m);
+}
+
+.tag {
+  height: 40px;
+  display: inline-flex;
+  border: 1px solid var(--tag-color);
+  color: var(--tag-color);
+  background: transparent;
+  border-radius: 0.5rem;
+  margin-right: var(--spacing-sm);
+  margin-bottom: var(--spacing-sm);
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.2s linear;
+}
+
+.tag:hover {
+  background: var(--tag-color);
+  color: #fff;
+}
+
+.tag span {
+  padding: 0 1rem;
+}
+
+/* Product */
+.productContainer {
+  border-radius: 0.5rem;
+  box-shadow: var(--box-shadow);
+  transition: var(--animation-time);
+}
+
+.productContainer:hover {
+  box-shadow: var(--box-shadow-hover);
+}
+
+.productsContainer > p {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-bold);
+  margin-bottom: var(--spacing-m);
+}
+
+.productsWrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--gap);
+}
+
+.productImg {
+  min-width: 250px;
+  aspect-ratio: 1/1;
+}
+
+.productImg img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
+}
+
+.productDetails {
+  padding: var(--spacing-s);
+}
+
+.productDetails h3 {
+  margin-bottom: var(--spacing-sm);
+  font-size: var(--font-size-l);
+}
+
+.productDetails p {
+  font-size: var(--font-size-m);
+  color: var(--font-color-light);
+  margin-bottom: var(--spacing-xs);
+}
+
+.productDetailsBuy {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.productDetailsBuy span {
+  font-weight: var(--font-semi-bold);
+}
