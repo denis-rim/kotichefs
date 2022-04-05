@@ -112,12 +112,12 @@
 }
 
 .productDetails {
-  padding-inline: var(--spacing-s);
-  padding-bottom: var(--spacing-s);
-  height: 210px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  padding-inline: var(--spacing-s);
+  padding-bottom: var(--spacing-s);
+  height: 210px;
 }
 
 .productDetails h3 {
@@ -141,8 +141,14 @@
   font-weight: var(--font-semi-bold);
 }
 
-@media screen and (max-width: 1050px) {
+@media screen and (max-width: 1190px) {
   .productsWrapper {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media screen and (max-width: 810px) {
+  .productsWrapper {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }

@@ -2,13 +2,13 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import { PublicChefModel } from "../../models/UserModel";
+import { ProductModel } from "../../models/ProductModel";
 
 import Section from "../Layout/Section";
 import Rating from "../shared/Rating";
+import Button from "../shared/Button";
 
 import styles from "./PublicChef.module.css";
-import Button from "../shared/Button";
-import { ProductModel } from "../../models/ProductModel";
 
 function PublicChefPageComponent({
   chef,
@@ -19,11 +19,15 @@ function PublicChefPageComponent({
 }) {
   return (
     <Section>
-      {/* Chef about */}
+      {/* Chef */}
       <div className={styles.pageContainer}>
         {/* Chef image */}
         <div className={styles.imageContainerWrapper}>
-          <img className={styles.avatarImg} src={chef.photo_url} />
+          <img
+            className={styles.avatarImg}
+            src={chef.photo_url}
+            alt={`${chef.fullName} photo`}
+          />
         </div>
 
         {/* Chef about */}
@@ -89,3 +93,11 @@ function PublicChefPageComponent({
 }
 
 export default PublicChefPageComponent;
+
+// <div>
+//   <figure>
+//     <svg aria-hidden="true" width="700" height="100%" viewBox="0 0 700 525">
+//       <rect width="700" height="525"></rect>
+//     </svg>
+//   </figure>
+// </div>;

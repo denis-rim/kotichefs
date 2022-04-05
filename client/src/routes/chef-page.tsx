@@ -1,56 +1,43 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
-import { PublicChefModel } from "../models/UserModel";
-import { ProductModel } from "../models/ProductModel";
+import { useAppDispatch, useAppSelector } from "../hooks/redux";
 
-import { fetchChefProducts } from "../services/api/handlers/product";
-import { fetchChefById } from "../services/api/handlers/chef";
+import { getChefPublicInfo } from "../store/actions/ChefActionCreators";
+import { getChefProductsAction } from "../store/actions/ProductActionCreators";
 
 import PublicChefPageComponent from "../components/PublicChef/PublicChefPageComponent";
 
 function ChefPage() {
-  const [chef, setChef] = useState<PublicChefModel | null>(null);
-  const [products, setProducts] = useState<ProductModel[]>([]);
+  const dispatch = useAppDispatch();
+  const { productReducer, chefReducer } = useAppSelector((state) => state);
+
   const { chefId } = useParams<{ chefId: string | undefined }>();
 
   const [page, setPage] = useState(1);
   const [pageCount, setPageCount] = useState(0);
 
   useEffect(() => {
-    let isIgnoreResponse = false;
-
     async function getChefById() {
       if (chefId) {
-        try {
-          const [chefResponse, productsResponse] = await Promise.all([
-            fetchChefById(chefId),
-            fetchChefProducts(chefId, page),
-          ]);
-
-          if (!isIgnoreResponse) {
-            setChef(chefResponse.data);
-            setProducts(productsResponse.data.products);
-            setPageCount(productsResponse.data.pagination.pageCount);
-          }
-        } catch (err) {
-          console.warn(err);
-        }
+        dispatch(getChefPublicInfo(chefId));
+        dispatch(getChefProductsAction({ chefId, page }));
       }
     }
 
     void getChefById();
-
-    return () => {
-      isIgnoreResponse = true;
-    };
   }, [chefId]);
 
-  if (!chef) {
+  if (!chefReducer.currentChef) {
     return <div>No chef...</div>;
   }
 
-  return <PublicChefPageComponent chef={chef} products={products} />;
+  return (
+    <PublicChefPageComponent
+      chef={chefReducer.currentChef}
+      products={productReducer.products}
+    />
+  );
 }
 
 export default ChefPage;

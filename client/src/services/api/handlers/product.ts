@@ -1,14 +1,14 @@
 import { api } from "../apiClient";
 import { ProductModel } from "../../../models/ProductModel";
 
-interface PublicChefProductsResponse {
-  data: {
-    pagination: { count: number; pageCount: number };
-    products: ProductModel[];
-  };
-}
+// export interface PublicChefProductsResponse {
+//   data: {
+//     pagination: { count: number; pageCount: number };
+//     products: ProductModel[];
+//   };
+// }
 
-interface ProductResponse {
+export interface ProductResponse {
   pagination: { count: number; pagesCount: number };
   products: ProductModel[];
 }
@@ -22,7 +22,7 @@ export function fetchProduct(id: string) {
 }
 
 export function fetchChefProducts(id: string, page: number) {
-  return api.get<null, PublicChefProductsResponse>(
+  return api.get<null, { data: ProductResponse }>(
     `products/chef/?userId=${id}&page=${page}`
   );
 }

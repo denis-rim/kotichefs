@@ -4,7 +4,7 @@ import { Link, Outlet } from "react-router-dom";
 import { ProductModel } from "../../models/ProductModel";
 
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
-import { fetchAllProducts } from "../../store/actions/ProductActionCreators";
+import { getAllProductsAction } from "../../store/actions/ProductActionCreators";
 
 import ProductCard from "../ProductCard/ProductCard";
 import Spinner from "../Spinner/Spinner";
@@ -19,7 +19,7 @@ function ProductList() {
   const [pageCount, setPageCount] = useState(0);
 
   useEffect(() => {
-    dispatch(fetchAllProducts(page));
+    dispatch(getAllProductsAction(page));
   }, [dispatch]);
 
   if (isLoading) {

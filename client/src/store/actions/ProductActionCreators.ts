@@ -1,12 +1,33 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { fetchProducts } from "../../services/api/handlers/product";
+import {
+  fetchProducts,
+  fetchChefProducts,
+} from "../../services/api/handlers/product";
 
 // Fetch all products action creator
-export const fetchAllProducts = createAsyncThunk(
+export const getAllProductsAction = createAsyncThunk(
   "products/fetchProducts",
   async (page: number, { rejectWithValue }) => {
     try {
       const response = await fetchProducts(page);
+      return response.data.products;
+    } catch (err) {
+      console.warn(err);
+      return rejectWithValue(err);
+    }
+  }
+);
+
+// Fetch all chef products action creator
+export const getChefProductsAction = createAsyncThunk(
+  "products/fetchChefProducts",
+  async (
+    { chefId, page }: { chefId: string; page: number },
+    { rejectWithValue }
+  ) => {
+    try {
+      const response = await fetchChefProducts(chefId, page);
+      console.log(response.data);
       return response.data.products;
     } catch (err) {
       console.warn(err);

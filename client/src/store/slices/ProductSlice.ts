@@ -2,7 +2,10 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 import { ProductModel } from "../../models/ProductModel";
 
-import { fetchAllProducts } from "../actions/ProductActionCreators";
+import {
+  getAllProductsAction,
+  getChefProductsAction,
+} from "../actions/ProductActionCreators";
 
 interface ProductState {
   products: ProductModel[];
@@ -21,17 +24,33 @@ export const productSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: {
-    [fetchAllProducts.pending.type]: (state) => {
+    // Fetch all products
+    [getAllProductsAction.pending.type]: (state) => {
       state.isLoading = true;
     },
-    [fetchAllProducts.fulfilled.type]: (
+    [getAllProductsAction.fulfilled.type]: (
       state,
       action: PayloadAction<ProductModel[]>
     ) => {
       state.products = action.payload;
       state.isLoading = false;
     },
-    [fetchAllProducts.rejected.type]: (state, action) => {
+    [getAllProductsAction.rejected.type]: (state, action) => {
+      state.error = action.error.message;
+      state.isLoading = false;
+    },
+    // Fetch Chef products
+    [getChefProductsAction.pending.type]: (state) => {
+      state.isLoading = true;
+    },
+    [getChefProductsAction.fulfilled.type]: (
+      state,
+      action: PayloadAction<ProductModel[]>
+    ) => {
+      state.products = action.payload;
+      state.isLoading = false;
+    },
+    [getChefProductsAction.rejected.type]: (state, action) => {
       state.error = action.error.message;
       state.isLoading = false;
     },

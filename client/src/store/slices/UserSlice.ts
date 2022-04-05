@@ -4,7 +4,7 @@ import {
   loginUser,
   registerUser,
 } from "../actions/UserActionCreators";
-import {PublicUser} from "../../models/UserModel";
+import { PublicUser } from "../../models/UserModel";
 
 interface UserState {
   user: PublicUser | null;
@@ -25,6 +25,7 @@ export const userSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: {
+    // Get current user info
     [currentUserData.fulfilled.type]: (
       state,
       action: PayloadAction<PublicUser>
@@ -37,14 +38,11 @@ export const userSlice = createSlice({
       state.isLoading = true;
     },
     [currentUserData.rejected.type]: (state, action: PayloadAction<string>) => {
-      console.log(action.payload);
       state.isLoading = false;
       state.error = action.payload;
     },
-    [loginUser.fulfilled.type]: (
-      state,
-      action: PayloadAction<PublicUser>
-    ) => {
+    // Login user
+    [loginUser.fulfilled.type]: (state, action: PayloadAction<PublicUser>) => {
       state.user = action.payload;
       state.isLoggedIn = true;
       state.isLoading = false;
@@ -59,6 +57,7 @@ export const userSlice = createSlice({
       state.isLoading = false;
       state.error = action.payload;
     },
+    // Register User
     [registerUser.fulfilled.type]: (
       state,
       action: PayloadAction<PublicUser>

@@ -19,9 +19,9 @@ const payload = {
       required_error: "Image is required",
     }),
     ingredients: string().array(),
-    cuisine: string({
+    tags: string({
       required_error: "Cusine is required",
-    }),
+    }).array(),
   }),
 };
 
