@@ -1,17 +1,11 @@
 import { api } from "../apiClient";
+import { ProductModel } from "../../../models/ProductModel";
 
-export interface ProductModel {
-  _id: string;
-  user: string;
-  name: string;
-  price: number;
-  description: string;
-  image: string;
-  ingredients: string[];
-  rating: number;
-  reviews: string[];
-  createdAt: string;
-  updatedAt: string;
+interface PublicChefProductsResponse {
+  data: {
+    pagination: { count: number; pageCount: number };
+    products: ProductModel[];
+  };
 }
 
 interface ProductResponse {
@@ -25,4 +19,10 @@ export function fetchProducts(page: number) {
 
 export function fetchProduct(id: string) {
   return api.get<null, { data: ProductModel }>(`/products/${id}`);
+}
+
+export function fetchChefProducts(id: string, page: number) {
+  return api.get<null, PublicChefProductsResponse>(
+    `products/chef/?userId=${id}&page=${page}`
+  );
 }

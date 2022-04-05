@@ -4,6 +4,7 @@ import {
   createProductSchema,
   deleteProductSchema,
   getAllProductSchema,
+  getChefProductsSchema,
   getProductSchema,
   updateProductSchema,
 } from "../validation/product.validationSchema";
@@ -11,12 +12,19 @@ import {
   createProductHandler,
   deleteProductHandler,
   getAllProductsHandler,
+  getChefProductsHandler,
   getProductByIdHandler,
   updateProductHandler,
 } from "../controller/product.controller";
 import requireUser from "../middleware/requireUser";
 
 const router = express.Router();
+
+router.get(
+  "/chef",
+  validateResource(getChefProductsSchema),
+  getChefProductsHandler
+);
 
 // Get all products route
 router.get("/", validateResource(getAllProductSchema), getAllProductsHandler);
@@ -50,4 +58,5 @@ router.delete(
   validateResource(deleteProductSchema),
   deleteProductHandler
 );
+
 export default router;

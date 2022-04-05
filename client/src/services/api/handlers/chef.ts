@@ -1,4 +1,5 @@
 import { PublicChefModel } from "../../../models/UserModel";
+
 import { api } from "../apiClient";
 
 export function fetchPromotedChefs() {

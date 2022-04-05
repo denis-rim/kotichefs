@@ -11,7 +11,7 @@ function Rating({
   withReview?: boolean;
 }) {
   return (
-    <div className="mt-3 flex flex-col items-center">
+    <div className="mt-2 mb-2 flex flex-col items-start">
       <p className="sr-only">{rating} out of 5 stars</p>
       <div className="flex items-center">
         {[0, 1, 2, 3, 4].map((ratingArr) => (

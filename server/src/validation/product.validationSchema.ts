@@ -19,6 +19,9 @@ const payload = {
       required_error: "Image is required",
     }),
     ingredients: string().array(),
+    cuisine: string({
+      required_error: "Cusine is required",
+    }),
   }),
 };
 
@@ -32,6 +35,7 @@ const paramsProductId = {
 
 const paramsProductsPage = {
   query: object({
+    userId: string().optional(),
     page: string().optional(),
   }),
 };
@@ -48,6 +52,10 @@ export const getProductSchema = object({
   ...paramsProductId,
 });
 
+export const getChefProductsSchema = object({
+  ...paramsProductsPage,
+});
+
 export const updateProductSchema = object({
   ...payload,
   ...paramsProductId,
@@ -58,7 +66,13 @@ export const deleteProductSchema = object({
 });
 
 export type CreateProductInput = TypeOf<typeof createProductSchema>["body"];
+
 export type GetProductInput = TypeOf<typeof getProductSchema>["params"];
+export type GetChefProductsInput = TypeOf<
+  typeof getChefProductsSchema
+>["query"];
 export type GetAllProductInput = TypeOf<typeof getAllProductSchema>["query"];
+
 export type UpdateProductInput = TypeOf<typeof updateProductSchema>;
+
 export type DeleteProductInput = TypeOf<typeof deleteProductSchema>["params"];

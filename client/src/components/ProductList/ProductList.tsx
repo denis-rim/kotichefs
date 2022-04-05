@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, Outlet } from "react-router-dom";
 
-import { ProductModel } from "../../services/api/handlers/product";
+import { ProductModel } from "../../models/ProductModel";
 
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { fetchAllProducts } from "../../store/actions/ProductActionCreators";

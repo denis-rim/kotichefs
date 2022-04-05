@@ -3,7 +3,9 @@ import { useParams } from "react-router-dom";
 import { StarIcon } from "@heroicons/react/solid";
 import { Tab } from "@headlessui/react";
 
-import { fetchProduct, ProductModel } from "../services/api/handlers/product";
+import { ProductModel } from "../models/ProductModel";
+
+import { fetchProduct } from "../services/api/handlers/product";
 
 import Button from "../components/shared/Button";
 

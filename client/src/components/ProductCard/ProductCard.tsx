@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import { ProductModel } from "../../services/api/handlers/product";
+import { ProductModel } from "../../models/ProductModel";
 
 import Rating from "../shared/Rating";
 

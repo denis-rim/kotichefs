@@ -2,9 +2,10 @@ import React, { useEffect } from "react";
 
 import { useAppDispatch, useAppSelector } from "../hooks/redux";
 
+import { getChefs } from "../store/actions/ChefActionCreators";
+
 import Spinner from "../components/Spinner/Spinner";
 import ChefCard from "../components/HomePage/ChefCard";
-import { getChefs } from "../store/actions/ChefActionCreators";
 
 function AllChefsPage() {
   const dispatch = useAppDispatch();

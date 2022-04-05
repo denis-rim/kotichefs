@@ -8,6 +8,7 @@ export interface ProductInput extends mongoose.Document {
   description: string;
   image: string;
   ingredients: string[];
+  // cuisine: string;
 }
 
 export interface ProductDocument extends ProductInput, mongoose.Document {
@@ -32,6 +33,7 @@ const productSchema = new mongoose.Schema(
     ingredients: { type: [String], required: true },
     rating: { type: Number, default: 0 },
     reviews: { type: Array, default: [] },
+    // cuisine: { type: String, required: true },
   },
   {
     timestamps: true,
