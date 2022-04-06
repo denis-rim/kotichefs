@@ -34,7 +34,7 @@ function PublicChefPageComponent({
   };
 
   return (
-    <Section style={{ minWidth: "680px" }}>
+    <Section style={{ minHeight: "1340px" }}>
       {/* Chef */}
       <div className={styles.pageContainer}>
         {/* Chef image */}
