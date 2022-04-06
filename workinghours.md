@@ -32,4 +32,5 @@
 | 05.04 | 5     | client / server | Refactor code, fetch Chef products, style fixes                                                                                             |
 |       | 2     | client / server | Move fetch chef info and fetch chef products to redux, add some styles to chef page, add tags to ProductModel                               |
 |       | 4     | client / server | Add pagination to chef-page, fix getChefProductsHandler, style fixes                                                                        |
-| total | 97    | 
+|       | 3     | client          | Add pagination to products-page, move paginate to its own component fix, style fixes                                                        |
+| total | 100   | 

@@ -15,11 +15,8 @@ function ProductList() {
     (state) => state.productReducer
   );
 
-  const [page, setPage] = useState(1);
-  const [pageCount, setPageCount] = useState(0);
-
   useEffect(() => {
-    dispatch(getAllProductsAction(page));
+    dispatch(getAllProductsAction(1));
   }, [dispatch]);
 
   if (isLoading) {

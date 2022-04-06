@@ -7,8 +7,11 @@ import {
   GetChefProductsInput,
   UpdateProductInput,
 } from "../validation/product.validationSchema";
+
 import { MyResponseLocals } from "../middleware/requireUser";
+
 import logger from "../utils/logger";
+
 import {
   createProduct,
   deleteProduct,
@@ -148,7 +151,7 @@ export async function getChefProductsHandler(
     const skip = ITEMS_PER_PAGE * (page - 1);
 
     // Get all products count promise
-    const countPromise = getAllProductsCount({});
+    const countPromise = getAllProductsCount({ user: userId });
 
     // Get all products promise
     const productsPromise = getAllProducts(
@@ -164,7 +167,7 @@ export async function getChefProductsHandler(
     ]);
 
     // If products not found return 404
-    if (!products) {
+    if (products.length === 0) {
       return res.status(404).send("Products not found");
     }
 

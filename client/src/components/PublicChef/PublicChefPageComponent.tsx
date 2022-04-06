@@ -1,18 +1,19 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
-import ReactPaginate from "react-paginate";
+
+import { ProductModel } from "../../models/ProductModel";
+import { PublicChefModel } from "../../models/UserModel";
 
 import { getChefProductsAction } from "../../store/actions/ProductActionCreators";
 import { useAppDispatch } from "../../hooks/redux";
 
-import { PublicChefModel } from "../../models/UserModel";
 import { ProductResponse } from "../../services/api/handlers/product";
 
-import { ProductModel } from "../../models/ProductModel";
-import Section from "../Layout/Section";
+import Pagination from "../shared/Pagination/Pagination";
+import Section from "../Layout/Section/Section";
 import Rating from "../shared/Rating";
-
 import Button from "../shared/Button";
+
 import styles from "./PublicChef.module.css";
 
 function PublicChefPageComponent({
@@ -33,7 +34,7 @@ function PublicChefPageComponent({
   };
 
   return (
-    <Section>
+    <Section style={{ minWidth: "680px" }}>
       {/* Chef */}
       <div className={styles.pageContainer}>
         {/* Chef image */}
@@ -103,28 +104,10 @@ function PublicChefPageComponent({
           </div>
         </div>
       </div>
-      <div className={styles.container}>
-        <ReactPaginate
-          nextLabel="next >"
-          onPageChange={handlePageClick}
-          pageRangeDisplayed={3}
-          marginPagesDisplayed={2}
-          pageCount={pagination.pagesCount}
-          previousLabel="< previous"
-          pageClassName={styles.pageItem}
-          pageLinkClassName={styles.pageLink}
-          previousClassName={styles.pageItem}
-          previousLinkClassName={styles.pageLink}
-          nextClassName={styles.pageItem}
-          nextLinkClassName={styles.pageLink}
-          breakLabel="..."
-          breakClassName={styles.pageItem}
-          breakLinkClassName={styles.pageLink}
-          containerClassName={styles.paginationContainer}
-          activeClassName={styles.pageActive}
-          renderOnZeroPageCount={undefined}
-        />
-      </div>
+      <Pagination
+        pagesCount={pagination.pagesCount}
+        onPageChange={handlePageClick}
+      />
     </Section>
   );
 }
