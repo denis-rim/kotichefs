@@ -11,7 +11,7 @@ import Spinner from "../Spinner/Spinner";
 
 function ProductList() {
   const dispatch = useAppDispatch();
-  const { products, isLoading } = useAppSelector(
+  const { products, pagination, isLoading } = useAppSelector(
     (state) => state.productReducer
   );
 
@@ -24,6 +24,10 @@ function ProductList() {
 
   if (isLoading) {
     return <Spinner />;
+  }
+
+  if (!products) {
+    return <div>No products found</div>;
   }
 
   return (

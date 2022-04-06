@@ -16,15 +16,24 @@
   --first-color-second: hsl(var(--hue-color), 69%, 61%);
   --first-color-alt: hsl(var(--hue-color), 57%, 53%);
   --first-color-lighter: hsl(var(--hue-color), 92%, 85%);
+
+  --second-color: hsl(162, 64%, 56%);
+
+  --inactive-color: hsl(0, 0%, 97%);
+
   --title-color: hsl(var(--hue-color), 8%, 15%);
+
   --font-color: hsl(var(--hue-color), 8%, 45%);
   --font-color-light: hsl(var(--hue-color), 8%, 35%);
+
   --input-color: hsl(var(--hue-color), 70%, 96%);
+
   --body-color: hsl(var(--hue-color), 60%, 99%);
+
   --container-color: #fff;
   --scroll-bar-color: hsl(var(--hue-color), 12%, 90%);
+
   --scroll-thumb-color: hsl(var(--hue-color), 12%, 70%);
-  --tag-color: hsl(162, 64%, 56%);
 
   /*========== Font and typography ==========*/
   --body-font: "Poppins", sans-serif;

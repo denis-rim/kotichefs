@@ -1,13 +1,6 @@
 import { api } from "../apiClient";
 import { ProductModel } from "../../../models/ProductModel";
 
-// export interface PublicChefProductsResponse {
-//   data: {
-//     pagination: { count: number; pageCount: number };
-//     products: ProductModel[];
-//   };
-// }
-
 export interface ProductResponse {
   pagination: { count: number; pagesCount: number };
   products: ProductModel[];

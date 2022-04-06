@@ -1,22 +1,37 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import ReactPaginate from "react-paginate";
+
+import { getChefProductsAction } from "../../store/actions/ProductActionCreators";
+import { useAppDispatch } from "../../hooks/redux";
 
 import { PublicChefModel } from "../../models/UserModel";
-import { ProductModel } from "../../models/ProductModel";
+import { ProductResponse } from "../../services/api/handlers/product";
 
+import { ProductModel } from "../../models/ProductModel";
 import Section from "../Layout/Section";
 import Rating from "../shared/Rating";
-import Button from "../shared/Button";
 
+import Button from "../shared/Button";
 import styles from "./PublicChef.module.css";
 
 function PublicChefPageComponent({
   chef,
   products,
+  pagination,
 }: {
   chef: PublicChefModel;
   products: ProductModel[];
+  pagination: ProductResponse["pagination"];
 }) {
+  const dispatch = useAppDispatch();
+
+  const handlePageClick = (event: { selected: number }) => {
+    dispatch(
+      getChefProductsAction({ chefId: chef._id, page: event.selected + 1 })
+    );
+  };
+
   return (
     <Section>
       {/* Chef */}
@@ -87,6 +102,28 @@ function PublicChefPageComponent({
             ))}
           </div>
         </div>
+      </div>
+      <div className={styles.container}>
+        <ReactPaginate
+          nextLabel="next >"
+          onPageChange={handlePageClick}
+          pageRangeDisplayed={3}
+          marginPagesDisplayed={2}
+          pageCount={pagination.pagesCount}
+          previousLabel="< previous"
+          pageClassName={styles.pageItem}
+          pageLinkClassName={styles.pageLink}
+          previousClassName={styles.pageItem}
+          previousLinkClassName={styles.pageLink}
+          nextClassName={styles.pageItem}
+          nextLinkClassName={styles.pageLink}
+          breakLabel="..."
+          breakClassName={styles.pageItem}
+          breakLinkClassName={styles.pageLink}
+          containerClassName={styles.paginationContainer}
+          activeClassName={styles.pageActive}
+          renderOnZeroPageCount={undefined}
+        />
       </div>
     </Section>
   );

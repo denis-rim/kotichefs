@@ -10,7 +10,7 @@ export const getAllProductsAction = createAsyncThunk(
   async (page: number, { rejectWithValue }) => {
     try {
       const response = await fetchProducts(page);
-      return response.data.products;
+      return response.data;
     } catch (err) {
       console.warn(err);
       return rejectWithValue(err);
@@ -27,8 +27,7 @@ export const getChefProductsAction = createAsyncThunk(
   ) => {
     try {
       const response = await fetchChefProducts(chefId, page);
-      console.log(response.data);
-      return response.data.products;
+      return response.data;
     } catch (err) {
       console.warn(err);
       return rejectWithValue(err);

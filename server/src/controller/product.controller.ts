@@ -54,7 +54,7 @@ export async function createProductHandler(
   }
 }
 
-const ITEMS_PER_PAGE = 15;
+const ITEMS_PER_PAGE = 2;
 
 export async function getAllProductsHandler(
   req: Request<GetAllProductInput>,
@@ -147,14 +147,15 @@ export async function getChefProductsHandler(
     // Number of items to skip
     const skip = ITEMS_PER_PAGE * (page - 1);
 
-    // Put all query params here
-    const query = { userId };
-
     // Get all products count promise
-    const countPromise = getAllProductsCount(query);
+    const countPromise = getAllProductsCount({});
 
     // Get all products promise
-    const productsPromise = getAllProducts(query, skip, ITEMS_PER_PAGE);
+    const productsPromise = getAllProducts(
+      { user: userId },
+      skip,
+      ITEMS_PER_PAGE
+    );
 
     // Get all products
     const [products, count] = await Promise.all([

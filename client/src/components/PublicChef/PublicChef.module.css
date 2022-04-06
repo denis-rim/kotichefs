@@ -1,4 +1,6 @@
 /* Chef details */
+
+/*==================== Chef Page ====================*/
 .pageContainer {
   display: flex;
   margin-bottom: var(--spacing-xl);
@@ -47,7 +49,7 @@
   margin-bottom: var(--spacing-m);
 }
 
-/* Tag */
+/*==================== Tag ====================*/
 .tagsContainer {
   display: flex;
   margin-bottom: var(--spacing-m);
@@ -56,8 +58,8 @@
 .tag {
   height: 40px;
   display: inline-flex;
-  border: 1px solid var(--tag-color);
-  color: var(--tag-color);
+  border: 1px solid var(--second-color);
+  color: var(--second-color);
   background: transparent;
   border-radius: 0.5rem;
   margin-inline: var(--spacing-sm);
@@ -67,7 +69,7 @@
 }
 
 .tag:hover {
-  background: var(--tag-color);
+  background: var(--second-color);
   color: #fff;
 }
 
@@ -75,7 +77,8 @@
   padding: 0 1rem;
 }
 
-/* Product */
+/*==================== Products ====================*/
+
 .productContainer {
   border-radius: 0.5rem;
   box-shadow: var(--box-shadow);
@@ -92,6 +95,7 @@
   margin-bottom: var(--spacing-m);
 }
 
+/*==================== Product Card ====================*/
 .productsWrapper {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -141,6 +145,57 @@
   font-weight: var(--font-semi-bold);
 }
 
+/*==================== Pagination ====================*/
+.container {
+  display: flex;
+  align-self: center;
+  justify-content: center;
+}
+
+.paginationContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-block: var(--spacing-s);
+  border: 1px solid var(--inactive-color);
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+
+.pageLink {
+  display: block;
+  padding: var(--spacing-sm) var(--spacing-s);
+  color: var(--font-color-light);
+  background-color: var(--inactive-color);
+  border: 1px solid var(--inactive-color);
+  z-index: 1;
+  transition: all 0.25s ease-in-out;
+}
+
+.pageLink:hover {
+  background-color: var(--second-color);
+  color: #fff;
+  border-color: var(--second-color);
+}
+
+.pageItem.pageActive .pageLink {
+  color: #ffffff;
+  background-color: var(--second-color);
+  border-color: var(--second-color);
+  z-index: 3;
+}
+
+.pageItem:first-child .pageLink {
+  border-top-left-radius: 0.5rem;
+  border-bottom-left-radius: 0.5rem;
+}
+
+.pageItem:last-child .pageLink {
+  border-top-right-radius: 0.5rem;
+  border-bottom-right-radius: 0.5rem;
+}
+
+/*==================== Media Queries ====================*/
 @media screen and (max-width: 1190px) {
   .productsWrapper {
     grid-template-columns: repeat(3, minmax(0, 1fr));

@@ -10,7 +10,10 @@ import PublicChefPageComponent from "../components/PublicChef/PublicChefPageComp
 
 function ChefPage() {
   const dispatch = useAppDispatch();
-  const { productReducer, chefReducer } = useAppSelector((state) => state);
+  const { products, pagination, isLoading, error } = useAppSelector(
+    (state) => state.productReducer
+  );
+  const { currentChef } = useAppSelector((state) => state.chefReducer);
 
   const { chefId } = useParams<{ chefId: string | undefined }>();
 
@@ -26,16 +29,17 @@ function ChefPage() {
     }
 
     void getChefById();
-  }, [chefId]);
+  }, [dispatch, chefId]);
 
-  if (!chefReducer.currentChef) {
+  if (!currentChef) {
     return <div>No chef...</div>;
   }
 
   return (
     <PublicChefPageComponent
-      chef={chefReducer.currentChef}
-      products={productReducer.products}
+      chef={currentChef}
+      products={products}
+      pagination={pagination}
     />
   );
 }
