@@ -43,6 +43,8 @@ export interface UserDocument extends mongoose.Document {
   rating: number;
   verified: boolean;
   isAdmin: boolean;
+  tags: string[];
+  address: string;
   createdAt: Date;
   updatedAt: Date;
   validatePassword(candidatePassword: string): Promise<boolean>;
@@ -90,6 +92,8 @@ const userSchema = new mongoose.Schema(
     rating: { type: Number, default: 0 },
     verified: { type: Boolean, default: false },
     isAdmin: { type: Boolean, default: false },
+    address: { type: String, default: "" },
+    tags: { type: [String], default: [] },
   },
   {
     timestamps: true,

@@ -1,6 +1,6 @@
 import { api } from "../apiClient";
-import { PrivateUser } from "../../../models/UserModel";
+import { UserModel } from "../../../models/UserModel";
 
 export function me() {
-  return api.get<null, { data: PrivateUser }>("/user/me");
+  return api.get<null, { data: UserModel }>("/user/me");
 }

@@ -223,6 +223,7 @@ export async function resetPasswordHandler(
   }
 }
 
+// Get current user info
 export async function getCurrentUserHandler(
   _req: Request,
   res: Response<unknown, MyResponseLocals>
@@ -230,20 +231,20 @@ export async function getCurrentUserHandler(
   try {
     const user = await findUserById(res.locals.user.user);
 
-    // If no user send unauthorized
+    // TODO: ADD typing to response and sanitize data as here: https://stackoverflow.com/questions/65815269/how-to-use-typescript-types-on-api-response-data
     if (!user) {
       return res.status(401).send("Unauthorized");
     }
 
     return res.status(200).send({
       id: user._id,
+      username: user.username,
       fullName: user.fullName,
       email: user.email,
       city: user.city,
       photo_url: user.photo_url,
       role: user.role,
       orders: user.orders,
-      products: user.products,
       cuisine: user.cuisine,
       promoted: user.promoted,
       about: user.about,
@@ -251,6 +252,8 @@ export async function getCurrentUserHandler(
       rating: user.rating,
       verified: user.verified,
       isAdmin: user.isAdmin,
+      address: user.address,
+      tags: user.tags,
     });
   } catch (err: unknown) {
     logger.error(err);
@@ -264,3 +267,58 @@ export async function getCurrentUserHandler(
     return res.status(500).send(errorMessage);
   }
 }
+
+// Update current user info
+// export async function updateCurrentUserHandler(
+//   req: Request<unknown, unknown, UpdateCurrentUserInput>,
+//   res: Response<unknown, MyResponseLocals>
+// ) {
+//   try {
+//     const user = await findUserById(res.locals.user.user);
+//
+//     if (!user) {
+//       return res.status(401).send("Unauthorized");
+//     }
+//
+//     const {
+//       username,
+//       fullName,
+//       email,
+//       city,
+//       photo_url,
+//       role,
+//       orders,
+//       cuisine,
+//       about,
+//       phone,
+//       address,
+//     } = req.body;
+//
+//     // Update user
+//     user.username = username;
+//     user.fullName = fullName;
+//     user.email = email;
+//     user.city = city;
+//     user.photo_url = photo_url;
+//     user.role = role;
+//     user.orders = orders;
+//     user.cuisine = cuisine;
+//     user.about = about;
+//     user.phone = phone;
+//     user.address = address;
+//
+//     await user.save();
+//
+//     return res.status(200).send("User successfully updated");
+//   } catch (err: unknown) {
+//     logger.error(err);
+//
+//     let errorMessage = "Something went wrong.";
+//
+//     if (err instanceof Error) {
+//       errorMessage += " Error: " + err.message;
+//     }
+//
+//     return res.status(500).send(errorMessage);
+//   }
+// }

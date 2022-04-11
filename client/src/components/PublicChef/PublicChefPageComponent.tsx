@@ -13,6 +13,7 @@ import Pagination from "../shared/Pagination/Pagination";
 import Section from "../Layout/Section/Section";
 import Rating from "../shared/Rating";
 import Button from "../shared/Button";
+import Tag from "../Tag/Tag";
 
 import styles from "./PublicChef.module.css";
 
@@ -59,17 +60,8 @@ function PublicChefPageComponent({
           <p>CHEFS STORE</p>
         </div>
 
-        {/* Chef tags */}
-        <div className={styles.tagsContainer}>
-          <div className={styles.tag}>
-            <span>All</span>
-          </div>
-          {chef.cuisine.map((item) => (
-            <div key={item} className={styles.tag}>
-              <span>{item}</span>
-            </div>
-          ))}
-        </div>
+        {/* Chef cuisine tags */}
+        <Tag tags={chef.cuisine} onClick={(item) => console.log(item)} />
 
         {/* Chef products */}
         <div className={styles.productsContainer}>

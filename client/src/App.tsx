@@ -9,11 +9,12 @@ import ProductsPage from "./routes/products-page";
 import ProductPage from "./routes/product-page";
 
 import Layout from "./components/Layout/Layout";
-
-const LoginPage = React.lazy(() => import("./routes/login-page"));
-const RegisterPage = React.lazy(() => import("./routes/register-page"));
-const CreatePage = React.lazy(() => import("./routes/create-page"));
-const NotFoundPage = React.lazy(() => import("./routes/404"));
+import AccountPage from "./routes/account-page";
+import UserInfoAccountPageComponent from "./components/AccountPage/UserInfoAccountPageComponent";
+import CreatePage from "./routes/create-page";
+import NotFoundPage from "./routes/404";
+import LoginPage from "./routes/login-page";
+import RegisterPage from "./routes/register-page";
 
 function App() {
   return (
@@ -40,8 +41,12 @@ function App() {
                 <Route path=":chefId" element={<ChefPage />} />
               </Route>
 
-              {/* Chefs private routes */}
-              <Route path="create" element={<CreatePage />} />
+              {/* Private routes */}
+              <Route path="account" element={<AccountPage />}>
+                <Route index element={<UserInfoAccountPageComponent />} />
+                <Route path="create" element={<CreatePage />} />
+              </Route>
+
               <Route path="*" element={<NotFoundPage />} />
             </Route>
           </Routes>

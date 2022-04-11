@@ -1,6 +1,5 @@
 import { Request, Response, NextFunction } from "express";
 import { verifyJwt } from "../utils/jwt";
-// import { get } from "lodash";
 import { reIssueAccessToken } from "../service/auth.service";
 import config from "config";
 

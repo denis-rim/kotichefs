@@ -4,10 +4,10 @@ import {
   loginUser,
   registerUser,
 } from "../actions/UserActionCreators";
-import { PublicUser } from "../../models/UserModel";
+import { UserModel } from "../../models/UserModel";
 
 interface UserState {
-  user: PublicUser | null;
+  user: UserModel | null;
   isLoggedIn: boolean;
   isLoading: boolean;
   error: string;
@@ -28,7 +28,7 @@ export const userSlice = createSlice({
     // Get current user info
     [currentUserData.fulfilled.type]: (
       state,
-      action: PayloadAction<PublicUser>
+      action: PayloadAction<UserModel>
     ) => {
       state.isLoading = false;
       state.error = "";
@@ -42,7 +42,7 @@ export const userSlice = createSlice({
       state.error = action.payload;
     },
     // Login user
-    [loginUser.fulfilled.type]: (state, action: PayloadAction<PublicUser>) => {
+    [loginUser.fulfilled.type]: (state, action: PayloadAction<UserModel>) => {
       state.user = action.payload;
       state.isLoggedIn = true;
       state.isLoading = false;
@@ -60,7 +60,7 @@ export const userSlice = createSlice({
     // Register User
     [registerUser.fulfilled.type]: (
       state,
-      action: PayloadAction<PublicUser>
+      action: PayloadAction<UserModel>
     ) => {
       state.user = action.payload;
       state.isLoggedIn = true;

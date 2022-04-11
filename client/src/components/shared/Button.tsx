@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactPropTypes } from "react";
 import cn from "classnames";
 import { Link } from "react-router-dom";
 
@@ -13,10 +13,12 @@ export interface ButtonProps {
   isActive?: boolean;
   loading?: boolean;
   children: React.ReactNode;
-  onClick?: () => void;
+  onClick?: () => void | undefined;
   className?: string;
   disabled?: boolean;
   type?: "button" | "submit" | "reset";
+  style?: React.CSSProperties;
+  props?: ReactPropTypes;
 }
 
 function Button({
@@ -24,9 +26,10 @@ function Button({
   children,
   href,
   className,
+  style,
   disabled,
   isActive,
-  type,
+  type = "button",
   loading = false,
   ...props
 }: ButtonProps): JSX.Element {
@@ -43,27 +46,8 @@ function Button({
 
   if (href) {
     return (
-      <div>
-        <Link
-          to={href}
-          className={cn(styles.button, className, {
-            [styles.primary]: appearance === "primary",
-            [styles.primaryBig]: appearance === "primary-big",
-            [styles.secondary]: appearance === "secondary",
-            [styles.secondaryBig]: appearance === "secondary-big",
-            [styles.danger]: appearance === "danger",
-          })}
-          {...props}
-        >
-          {children}
-        </Link>
-      </div>
-    );
-  }
-
-  return (
-    <div>
-      <button
+      <Link
+        to={href}
         className={cn(styles.button, className, {
           [styles.primary]: appearance === "primary",
           [styles.primaryBig]: appearance === "primary-big",
@@ -71,11 +55,28 @@ function Button({
           [styles.secondaryBig]: appearance === "secondary-big",
           [styles.danger]: appearance === "danger",
         })}
+        style={style}
         {...props}
       >
         {children}
-      </button>
-    </div>
+      </Link>
+    );
+  }
+
+  return (
+    <button
+      className={cn(styles.button, className, {
+        [styles.primary]: appearance === "primary",
+        [styles.primaryBig]: appearance === "primary-big",
+        [styles.secondary]: appearance === "secondary",
+        [styles.secondaryBig]: appearance === "secondary-big",
+        [styles.danger]: appearance === "danger",
+      })}
+      style={style}
+      {...props}
+    >
+      {children}
+    </button>
   );
 }
 

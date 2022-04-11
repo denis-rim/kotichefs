@@ -4,41 +4,50 @@ export enum UserRole {
   Admin = "admin",
 }
 
-interface UserBaseEntry {
+export enum Cuisine {
+  Finnish = "finnish",
+  Italian = "italian",
+  Mexican = "mexican",
+  Chinese = "chinese",
+  Japanese = "japanese",
+  Indian = "indian",
+  Korean = "korean",
+  Thai = "thai",
+  Vietnamese = "vietnamese",
+  American = "american",
+  Russian = "russian",
+}
+
+export interface UserModel {
   _id: string;
   username: string;
   fullName: string;
   email: string;
   city: string;
+  salt: string;
   photo_url: string;
   role: UserRole;
+  orders: string[];
+  products: string[];
+  cuisine: Cuisine[];
+  promoted: boolean;
   about: string;
   phone: string;
+  rating: number;
   verified: boolean;
   isAdmin: boolean;
-  orders: string[];
+  address: string;
   createdAt: Date;
   updatedAt: Date;
 }
 
 export type PublicUser = Pick<
-  UserBaseEntry,
+  UserModel,
   "_id" | "username" | "fullName" | "city" | "photo_url" | "role"
 >;
 
-export type PrivateUser = Omit<
-  UserBaseEntry,
-  "products" | "promoted" | "rating"
->;
-
-export interface PublicChefModel extends UserBaseEntry {
+export interface PublicChefModel extends UserModel {
   products: string[];
-  cuisine: string[];
-  promoted: boolean;
-  rating: number;
-}
-
-export interface PrivateChefModel extends UserBaseEntry {
   promoted: boolean;
   rating: number;
 }

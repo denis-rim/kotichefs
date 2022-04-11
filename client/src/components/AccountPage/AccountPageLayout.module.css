@@ -1,0 +1,35 @@
+/*========== Container ==========*/
+.container {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--spacing-md);
+}
+
+/*========== Navigation ==========*/
+aside {
+  grid-column: span 3 / span 3;
+}
+
+.navLink {
+  display: flex;
+  color: var(--font-color-light);
+  font-size: var(--font-size-s);
+  font-weight: var(--font-weight-600);
+  padding: 0.75rem var(--spacing-sm);
+  border-radius: var(--border-radius);
+}
+
+.navLink:hover {
+  background-color: var(--hover-color);
+}
+
+.icon {
+  width: 1.5rem;
+  height: 1.5rem;
+  color: var(--font-color-light);
+  margin-right: var(--spacing-md);
+}
+
+.contentContainer {
+  grid-column: span 9 / span 9;
+}
