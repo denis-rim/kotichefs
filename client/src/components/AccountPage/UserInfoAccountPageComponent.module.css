@@ -83,6 +83,35 @@
   opacity: 0;
 }
 
+/*========== User badge ==========*/
+.userBadgeContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--border-radius);
+  background-color: var(--second-color);
+}
+
+.userBadgeContainer span {
+  padding: var(--spacing-xs);
+  color: white;
+  text-transform: uppercase;
+  margin-inline: var(--spacing-xs);
+  font-size: var(--font-size-s);
+  font-weight: var(--font-weight-600);
+}
+
+.userBadgeContainer span:nth-child(2) {
+  margin-inline: unset;
+  border-inline: 1px solid white;
+  padding-inline: var(--spacing-xs);
+}
+
+.promoted {
+  color: var(--font-color) !important;
+  background-color: var(--first-color);
+}
+
 /*========== Personal information ==========*/
 .personalInformationContainer {
   display: grid;

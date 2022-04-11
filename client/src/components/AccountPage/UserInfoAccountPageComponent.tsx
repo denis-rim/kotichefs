@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 
+import { currentUserData } from "../../store/actions/UserActionCreators";
+("");
 import Box from "../Layout/Box/Box";
 import BoxInner from "../Layout/Box/BoxInner";
 import Button from "../shared/Button";
+import Spinner from "../Spinner/Spinner";
 
 import styles from "./UserInfoAccountPageComponent.module.css";
-import { currentUserData } from "../../store/actions/UserActionCreators";
-import Spinner from "../Spinner/Spinner";
 
 const UserInfoAccountPageComponent = () => {
   const dispatch = useAppDispatch();
@@ -66,10 +67,13 @@ const UserInfoAccountPageComponent = () => {
                   </div>
                 </div>
               </div>
-              <div>
+              {/* User badge component */}
+              <div className={styles.userBadgeContainer}>
                 <span>{user.role}</span>
                 {user.role === "chef" ? (
-                  <span>{user.promoted ? "promoted" : "no promotion"}</span>
+                  <span className={user.promoted ? styles.promoted : ""}>
+                    {user.promoted ? "promoted" : "no promotion"}
+                  </span>
                 ) : (
                   ""
                 )}
