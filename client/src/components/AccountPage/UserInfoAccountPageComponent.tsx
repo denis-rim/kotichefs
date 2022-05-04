@@ -212,7 +212,7 @@ const UserInfoAccountPageComponent = () => {
             {disabled ? (
               <Button
                 style={{ display: "inline-flex", width: "unset" }}
-                onClick={() => setDisabled(!disabled)}
+                onClick={() => setDisabled(false)}
                 type="submit"
               >
                 Edit
@@ -222,6 +222,7 @@ const UserInfoAccountPageComponent = () => {
                 <Button
                   appearance="secondary"
                   style={{ display: "inline-flex", width: "unset" }}
+                  onClick={() => setDisabled(true)}
                 >
                   Cancel
                 </Button>

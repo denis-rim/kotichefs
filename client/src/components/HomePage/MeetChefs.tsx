@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { getPromotedChefs } from "../../store/actions/ChefActionCreators";
 
-import ChefCard from "./ChefCard";
+import ChefCard from "../ChefCard/ChefCard";
 import Spinner from "../Spinner/Spinner";
 
 function MeetChefs() {

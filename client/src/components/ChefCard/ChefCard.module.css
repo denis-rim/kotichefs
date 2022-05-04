@@ -1,0 +1,36 @@
+.imageContainer {
+  width: 100%;
+  height: 20rem;
+  overflow: hidden;
+  border-radius: var(--border-radius);
+}
+
+.imageContainer img {
+  width: 100%;
+  height: 100%;
+  object-position: center;
+  object-fit: cover;
+}
+
+.contentContainer {
+  display: flex;
+  justify-content: start;
+  margin-top: var(--spacing-xxs);
+}
+
+.contentContainer h3 {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-600);
+}
+
+.contentContainer p {
+  margin-top: var(--spacing-xs);
+  font-size: var(--font-size-s);
+  color: var(--font-color-light);
+}
+
+@media (min-width: 550px) {
+  .imageContainer {
+    aspect-ratio: 1/1;
+  }
+}

@@ -3,26 +3,23 @@ import { Link } from "react-router-dom";
 
 import { PublicChefModel } from "../../models/UserModel";
 
+import styles from "./ChefCard.module.css";
+
 function ChefCard({ chef }: { chef: PublicChefModel }) {
-  console.log(chef);
   return (
     <div key={chef._id} className="group relative">
-      <div className="w-full min-h-80 bg-gray-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden group-hover:opacity-75 lg:h-80 lg:aspect-none">
-        <img
-          src={chef.photo_url}
-          alt={`${chef.fullName}'s photo`}
-          className="w-full h-full object-center object-cover lg:w-full lg:h-full"
-        />
+      <div className={styles.imageContainer}>
+        <img src={chef.photo_url} alt={`${chef.fullName}'s photo`} />
       </div>
-      <div className="mt-2 flex justify-start">
+      <div className={styles.contentContainer}>
         <div>
-          <h3 className="text-lg font-bold text-gray-700">
+          <h3>
             <Link to={`/chefs/${chef._id}`}>
               <span aria-hidden="true" className="absolute inset-0" />
               {chef.fullName}
             </Link>
           </h3>
-          <p className="mt-1 text-sm text-gray-500">{chef.about}</p>
+          <p>{chef.about}</p>
         </div>
       </div>
     </div>

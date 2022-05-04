@@ -35,10 +35,6 @@ const navigation = [
   },
 ];
 
-function classNames(...classes: string[]) {
-  return classes.filter(Boolean).join(" ");
-}
-
 function AccountPageLayout() {
   return (
     <div className={styles.container}>
