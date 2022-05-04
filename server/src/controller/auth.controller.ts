@@ -11,6 +11,7 @@ import { signJwt } from "../utils/jwt";
 import logger from "../utils/logger";
 import { MyResponseLocals } from "../middleware/requireUser";
 
+// Create new user
 export async function createUserSessionHandler(
   req: Request<unknown, unknown, CreateSessionInput>,
   res: Response
@@ -30,6 +31,7 @@ export async function createUserSessionHandler(
       user.salt + password + config.get<string>("pepper")
     );
 
+    //TODO:
     // Check if user is verified
     // if (!user.verified) {
     //   return res.status(401).send("Please verify your email");

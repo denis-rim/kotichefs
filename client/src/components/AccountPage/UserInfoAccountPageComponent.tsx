@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+import { EditUserInput, editUserSchema } from "../../services/validation";
 
 import { currentUserData } from "../../store/actions/UserActionCreators";
-("");
+
 import Box from "../Layout/Box/Box";
 import BoxInner from "../Layout/Box/BoxInner";
 import Button from "../shared/Button";
@@ -13,12 +17,35 @@ import styles from "./UserInfoAccountPageComponent.module.css";
 const UserInfoAccountPageComponent = () => {
   const dispatch = useAppDispatch();
   const { user, isLoading } = useAppSelector((state) => state.userReducer);
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm({
+    reValidateMode: "onChange",
+    shouldFocusError: true,
+    resolver: zodResolver(editUserSchema),
+    defaultValues: {
+      fullName: user?.fullName || "",
+      username: user?.username || "",
+      email: user?.email || "",
+      phone: user?.phone || "",
+      address: user?.address || "",
+      photo_url: user?.photo_url || "",
+      city: user?.city || "",
+      about: user?.about || "",
+    },
+  });
 
   const [disabled, setDisabled] = useState(true);
 
   useEffect(() => {
     dispatch(currentUserData());
   }, [dispatch]);
+
+  function onSubmit(body: EditUserInput) {
+    console.log(body);
+  }
 
   if (isLoading) {
     return (
@@ -41,7 +68,7 @@ const UserInfoAccountPageComponent = () => {
   return (
     <div>
       <Box>
-        <form>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <div className={styles.accountContainer}>
             {/* User avatar section */}
             <BoxInner
@@ -62,7 +89,7 @@ const UserInfoAccountPageComponent = () => {
                       <label htmlFor="user-avatar">
                         {user?.photo_url ? "Change" : "Upload"}
                       </label>
-                      <input id="user-avatar" name="user-avatar" type="file" />
+                      <input id="user-avatar" type="file" />
                     </div>
                   </div>
                 </div>
@@ -98,11 +125,10 @@ const UserInfoAccountPageComponent = () => {
                   <label htmlFor="full-name">Full name</label>
                   <input
                     type="text"
-                    name="full-name"
                     id="full-name"
                     autoComplete="given-name"
-                    defaultValue={user?.fullName}
-                    disabled={disabled}
+                    {...register("fullName")}
+                    disabled={true}
                   />
                 </div>
 
@@ -110,10 +136,9 @@ const UserInfoAccountPageComponent = () => {
                   <label htmlFor="user-name">User name</label>
                   <input
                     type="text"
-                    name="user-name"
                     id="user-name"
                     autoComplete="family-name"
-                    defaultValue={user?.username}
+                    {...register("username")}
                     disabled={disabled}
                   />
                 </div>
@@ -122,10 +147,9 @@ const UserInfoAccountPageComponent = () => {
                   <label htmlFor="email-address">Email</label>
                   <input
                     type="text"
-                    name="email-address"
                     id="email-address"
                     autoComplete="email"
-                    defaultValue={user?.email}
+                    {...register("email")}
                     disabled={disabled}
                   />
                 </div>
@@ -134,11 +158,8 @@ const UserInfoAccountPageComponent = () => {
                   <label htmlFor="phone-number">Phone Number</label>
                   <input
                     type="text"
-                    name="phone-number"
                     id="phone-number"
-                    className=""
-                    placeholder="+358 (44) 987-6543"
-                    defaultValue={user?.phone}
+                    {...register("phone")}
                     disabled={disabled}
                   />
                 </div>
@@ -147,11 +168,9 @@ const UserInfoAccountPageComponent = () => {
                   <label htmlFor="city">City</label>
                   <select
                     id="city"
-                    name="city"
                     autoComplete="city-name"
-                    defaultValue={user?.city}
+                    {...register("city")}
                     disabled={disabled}
-                    className="mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                   >
                     <option>Helsinki</option>
                     <option>Espoo</option>
@@ -160,57 +179,67 @@ const UserInfoAccountPageComponent = () => {
                 </div>
 
                 <div className={styles.inputContainer4}>
-                  <label
-                    htmlFor="street-address"
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    Street address
-                  </label>
+                  <label htmlFor="street-address">Street address</label>
                   <input
                     type="text"
-                    name="street-address"
                     id="street-address"
                     autoComplete="street-address"
-                    defaultValue={user?.address}
-                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                    disabled={disabled}
+                    {...register("address")}
                   />
                 </div>
 
                 <div className={styles.inputContainer4}>
-                  <label
-                    htmlFor="about"
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    About
-                  </label>
+                  <label htmlFor="about">About</label>
                   <div className="mt-1">
                     <textarea
                       rows={4}
-                      name="about"
                       id="about"
-                      className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
-                      defaultValue={user?.about}
+                      disabled={disabled}
+                      {...register("about")}
                     />
                   </div>
                 </div>
               </div>
             </BoxInner>
           </div>
-        </form>
-
-        <BoxInner
-          style={{
-            textAlign: "right",
-            backgroundColor: "hsl(210, 20%, 98%)",
-          }}
-        >
-          <Button
-            style={{ display: "inline-flex", width: "unset" }}
-            onClick={() => setDisabled(!disabled)}
+          <BoxInner
+            style={{
+              textAlign: "right",
+              backgroundColor: "hsl(210, 20%, 98%)",
+            }}
           >
-            Edit
-          </Button>
-        </BoxInner>
+            {disabled ? (
+              <Button
+                style={{ display: "inline-flex", width: "unset" }}
+                onClick={() => setDisabled(!disabled)}
+                type="submit"
+              >
+                Edit
+              </Button>
+            ) : (
+              <>
+                <Button
+                  appearance="secondary"
+                  style={{ display: "inline-flex", width: "unset" }}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  appearance="primary"
+                  type="submit"
+                  style={{
+                    display: "inline-flex",
+                    width: "unset",
+                    marginLeft: "1rem",
+                  }}
+                >
+                  Save
+                </Button>
+              </>
+            )}
+          </BoxInner>
+        </form>
       </Box>
     </div>
   );

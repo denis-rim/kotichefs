@@ -1,3 +1,5 @@
+import { ProductModel } from "./ProductModel";
+
 export enum UserRole {
   User = "user",
   Chef = "chef",
@@ -28,7 +30,8 @@ export interface UserModel {
   photo_url: string;
   role: UserRole;
   orders: string[];
-  products: string[];
+  myOrders: string[];
+  products: ProductModel[];
   cuisine: Cuisine[];
   promoted: boolean;
   about: string;
@@ -36,6 +39,7 @@ export interface UserModel {
   rating: number;
   verified: boolean;
   isAdmin: boolean;
+  tags: string[];
   address: string;
   createdAt: Date;
   updatedAt: Date;
@@ -46,8 +50,17 @@ export type PublicUser = Pick<
   "_id" | "username" | "fullName" | "city" | "photo_url" | "role"
 >;
 
-export interface PublicChefModel extends UserModel {
-  products: string[];
-  promoted: boolean;
-  rating: number;
-}
+export type PublicChefModel = Pick<
+  UserModel,
+  | "_id"
+  | "username"
+  | "fullName"
+  | "city"
+  | "photo_url"
+  | "role"
+  | "cuisine"
+  | "products"
+  | "promoted"
+  | "rating"
+  | "about"
+>;

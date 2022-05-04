@@ -34,4 +34,5 @@
 |          | 4     | client / server | Add pagination to chef-page, fix getChefProductsHandler, style fixes                                                                        |
 |          | 3     | client          | Add pagination to products-page, move paginate to its own component fix, style fixes                                                        |
 | 10-11.04 | 10    | client / server | Add Account page, AccountPageLayout, fix user model, styles, more ui components                                                             |
-|  total   | 110   | 
+|  04.05   | 3     | client / server | Update zod, update user controller, UserInfoAccountPageComponent                                                                            |
+|  total   | 113   | 

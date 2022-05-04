@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
+
 import { ProductDocument } from "./product.model";
 
 export enum Cuisine {
@@ -35,6 +36,7 @@ export interface UserDocument extends mongoose.Document {
   photo_url: string;
   role: UserRole;
   orders: string[];
+  myOrders: string[];
   products: ProductDocument["_id"][];
   cuisine: Cuisine[];
   promoted: boolean;
@@ -49,6 +51,31 @@ export interface UserDocument extends mongoose.Document {
   updatedAt: Date;
   validatePassword(candidatePassword: string): Promise<boolean>;
 }
+
+export type PrivateUser = Pick<
+  UserDocument,
+  | "_id"
+  | "username"
+  | "fullName"
+  | "email"
+  | "city"
+  | "photo_url"
+  | "role"
+  | "orders"
+  | "myOrders"
+  | "products"
+  | "cuisine"
+  | "promoted"
+  | "about"
+  | "phone"
+  | "rating"
+  | "verified"
+  | "tags"
+  | "address"
+  | "isAdmin"
+  | "createdAt"
+  | "updatedAt"
+>;
 
 export type PublicUser = Pick<
   UserDocument,
@@ -84,6 +111,7 @@ const userSchema = new mongoose.Schema(
     },
     city: { type: String, required: true, default: "Helsinki" },
     orders: { type: [String], default: [] },
+    myOrders: { type: [String], default: [] },
     products: { type: [mongoose.Schema.Types.ObjectId], ref: "Product" },
     cuisine: { type: [String], default: [] },
     promoted: { type: Boolean, default: false },
@@ -100,6 +128,7 @@ const userSchema = new mongoose.Schema(
   }
 );
 
+// Custom method to validate password
 userSchema.methods.validatePassword = async function (
   candidatePassword: string
 ): Promise<boolean> {
@@ -110,6 +139,7 @@ userSchema.methods.validatePassword = async function (
     .catch((_e: unknown) => false);
 };
 
+// Remove all sensitive data before sending user object to client
 userSchema.set("toJSON", {
   transform: (_, returnedObject: Partial<UserDocument>) => {
     delete returnedObject.passwordHash;

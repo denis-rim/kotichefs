@@ -15,3 +15,10 @@ export function findUserByEmail(email: string) {
 export function findUserByResetCode(resetCode: string) {
   return UserModel.findOne({ passwordResetCode: resetCode });
 }
+
+export function findUserByIDAndUpdate(
+  id: string,
+  input: Partial<UserDocument>
+) {
+  return UserModel.findByIdAndUpdate(id, input, { new: true });
+}

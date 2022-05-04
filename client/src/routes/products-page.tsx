@@ -7,7 +7,6 @@ import { getAllProductsAction } from "../store/actions/ProductActionCreators";
 import ProductCard from "../components/ProductCard/ProductCard";
 import Spinner from "../components/Spinner/Spinner";
 import Pagination from "../components/shared/Pagination/Pagination";
-import Section from "../components/Layout/Section/Section";
 
 function ProductsPage() {
   const dispatch = useAppDispatch();

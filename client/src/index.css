@@ -79,6 +79,15 @@
   --border-color: hsl(220, 13%, 91%);
 }
 
+/*========== Reset and elements styles ==========*/
+*,
+::before,
+::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
 body {
   font-family: var(--body-font);
 }
@@ -104,3 +113,57 @@ svg {
   display: block;
   vertical-align: center;
 }
+
+select {
+  display: block;
+  width: 100%;
+  padding: var(--spacing-xxs) var(--spacing-xs);
+  -webkit-appearance: none;
+  font-family: inherit;
+  font-size: var(--font-size-s);
+  line-height: 1.5rem;
+  appearance: none;
+  background-color: #fff;
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  background-image: url(data:image/svg+xml,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 fill=%27none%27 viewBox=%270 0 20 20%27%3e%3cpath stroke=%27%236b7280%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27 stroke-width=%271.5%27 d=%27M6 8l4 4 4-4%27/%3e%3c/svg%3e);
+  background-position: right 0.5rem center;
+  background-repeat: no-repeat;
+  background-size: 1.5em 1.5em;
+  padding-right: 2.5rem;
+}
+
+label {
+  display: block;
+  font-family: inherit;
+  font-size: var(--font-size-s);
+  font-weight: var(--font-weight-500);
+  color: var(--font-color);
+}
+
+input {
+  display: block;
+  width: 100%;
+  font-family: inherit;
+  padding: var(--spacing-xs);
+  font-size: var(--font-size-s);
+  margin-top: var(--spacing-xxs);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+}
+
+textarea {
+  width: 100%;
+  font-family: inherit;
+  font-size: var(--font-size-s);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+}
+
+/*!*========== Disabled styles ==========*!*/
+/*textarea:disabled,*/
+/*select:disabled,*/
+/*input:disabled {*/
+/*  background-color: var(--inactive-color);*/
+/*  color: var(--font-color-light);*/
+/*}*/

@@ -7,6 +7,7 @@ import {
   CreateUserInput,
   ForgotPasswordInput,
   ResetPasswordInput,
+  UpdateUserInput,
   VerifyUserInput,
 } from "../validation/user.validationSchema";
 import sendEmail from "../utils/mailer";
@@ -14,9 +15,11 @@ import {
   createUser,
   findUserByEmail,
   findUserById,
+  findUserByIDAndUpdate,
   findUserByResetCode,
 } from "../service/user.service";
 import { MyResponseLocals } from "../middleware/requireUser";
+import { PrivateUser } from "../models/user.model";
 
 // Register a new user
 export async function createUserHandler(
@@ -226,18 +229,17 @@ export async function resetPasswordHandler(
 // Get current user info
 export async function getCurrentUserHandler(
   _req: Request,
-  res: Response<unknown, MyResponseLocals>
+  res: Response<PrivateUser | string, MyResponseLocals>
 ) {
   try {
     const user = await findUserById(res.locals.user.user);
 
-    // TODO: ADD typing to response and sanitize data as here: https://stackoverflow.com/questions/65815269/how-to-use-typescript-types-on-api-response-data
     if (!user) {
       return res.status(401).send("Unauthorized");
     }
 
-    return res.status(200).send({
-      id: user._id,
+    const response: PrivateUser = {
+      _id: user._id,
       username: user.username,
       fullName: user.fullName,
       email: user.email,
@@ -245,6 +247,8 @@ export async function getCurrentUserHandler(
       photo_url: user.photo_url,
       role: user.role,
       orders: user.orders,
+      myOrders: user.myOrders,
+      products: user.products,
       cuisine: user.cuisine,
       promoted: user.promoted,
       about: user.about,
@@ -254,7 +258,11 @@ export async function getCurrentUserHandler(
       isAdmin: user.isAdmin,
       address: user.address,
       tags: user.tags,
-    });
+      createdAt: user.createdAt,
+      updatedAt: user.updatedAt,
+    };
+
+    return res.status(200).send(response);
   } catch (err: unknown) {
     logger.error(err);
 
@@ -269,56 +277,51 @@ export async function getCurrentUserHandler(
 }
 
 // Update current user info
-// export async function updateCurrentUserHandler(
-//   req: Request<unknown, unknown, UpdateCurrentUserInput>,
-//   res: Response<unknown, MyResponseLocals>
-// ) {
-//   try {
-//     const user = await findUserById(res.locals.user.user);
-//
-//     if (!user) {
-//       return res.status(401).send("Unauthorized");
-//     }
-//
-//     const {
-//       username,
-//       fullName,
-//       email,
-//       city,
-//       photo_url,
-//       role,
-//       orders,
-//       cuisine,
-//       about,
-//       phone,
-//       address,
-//     } = req.body;
-//
-//     // Update user
-//     user.username = username;
-//     user.fullName = fullName;
-//     user.email = email;
-//     user.city = city;
-//     user.photo_url = photo_url;
-//     user.role = role;
-//     user.orders = orders;
-//     user.cuisine = cuisine;
-//     user.about = about;
-//     user.phone = phone;
-//     user.address = address;
-//
-//     await user.save();
-//
-//     return res.status(200).send("User successfully updated");
-//   } catch (err: unknown) {
-//     logger.error(err);
-//
-//     let errorMessage = "Something went wrong.";
-//
-//     if (err instanceof Error) {
-//       errorMessage += " Error: " + err.message;
-//     }
-//
-//     return res.status(500).send(errorMessage);
-//   }
-// }
+export async function updateCurrentUserHandler(
+  req: Request<unknown, unknown, UpdateUserInput>,
+  res: Response<unknown, MyResponseLocals>
+) {
+  try {
+    const user = await findUserById(res.locals.user.user);
+
+    if (!user) {
+      return res.status(401).send("Unauthorized");
+    }
+
+    const {
+      username,
+      fullName,
+      city,
+      photo_url,
+      about,
+      phone,
+      address,
+      email,
+    } = req.body;
+
+    const data = {
+      username,
+      fullName,
+      city,
+      photo_url,
+      about,
+      phone,
+      address,
+      email,
+    };
+
+     await findUserByIDAndUpdate(user._id, data);
+
+    return res.status(200).send("User successfully updated");
+  } catch (err: unknown) {
+    logger.error(err);
+
+    let errorMessage = "Something went wrong.";
+
+    if (err instanceof Error) {
+      errorMessage += " Error: " + err.message;
+    }
+
+    return res.status(500).send(errorMessage);
+  }
+}

@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { PublicChefModel } from "../../models/UserModel";
 
 function ChefCard({ chef }: { chef: PublicChefModel }) {
+  console.log(chef);
   return (
     <div key={chef._id} className="group relative">
       <div className="w-full min-h-80 bg-gray-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden group-hover:opacity-75 lg:h-80 lg:aspect-none">
