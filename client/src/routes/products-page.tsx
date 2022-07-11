@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Link, Outlet } from "react-router-dom";
 
 import { useAppDispatch, useAppSelector } from "../hooks/redux";
 import { getAllProductsAction } from "../store/actions/ProductActionCreators";
 
-import ProductCard from "../components/ProductCard/ProductCard";
+import ProductCard from "../modules/common/ProductCard/ProductCard";
 import Spinner from "../components/Spinner/Spinner";
 import Pagination from "../components/shared/Pagination/Pagination";
 

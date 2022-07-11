@@ -1,13 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
-import { PublicChefModel } from "../../models/UserModel";
-
+import { PublicChefModel } from "../../../models/UserModel";
 import styles from "./ChefCard.module.css";
 
 function ChefCard({ chef }: { chef: PublicChefModel }) {
+  if (!chef) {
+    return null;
+  }
   return (
-    <div key={chef._id} className="group relative">
+    <div key={chef._id} style={{ position: "relative" }}>
       <div className={styles.imageContainer}>
         <img src={chef.photo_url} alt={`${chef.fullName}'s photo`} />
       </div>
@@ -15,7 +16,7 @@ function ChefCard({ chef }: { chef: PublicChefModel }) {
         <div>
           <h3>
             <Link to={`/chefs/${chef._id}`}>
-              <span aria-hidden="true" className="absolute inset-0" />
+              <span aria-hidden="true" />
               {chef.fullName}
             </Link>
           </h3>

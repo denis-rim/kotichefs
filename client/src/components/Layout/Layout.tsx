@@ -4,7 +4,7 @@ import { Outlet } from "react-router-dom";
 import Header from "./Header";
 import Footer from "./Footer";
 import Menu from "../HomePage/Menu";
-import Container from "./Container";
+import Container from "../Container/Container";
 
 const Layout = () => {
   return (

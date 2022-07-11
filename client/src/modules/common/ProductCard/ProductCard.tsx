@@ -1,25 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { ProductModel } from "../../../models/ProductModel";
+import Rating from "../../../components/shared/Rating";
 
-import { ProductModel } from "../../models/ProductModel";
-
-import Rating from "../shared/Rating";
-
-function ProductCard({ product }: { product: ProductModel }) {
-  return (
-    <ProductCardComponent product={product}>
-      <Rating rating={product.rating} withReview={true} />
-    </ProductCardComponent>
-  );
-}
-
-function ProductCardComponent({
-  product,
-  children,
-}: {
-  product: ProductModel;
-  children: React.ReactNode;
-}) {
+export default function ProductCard({ product }: { product: ProductModel }) {
   return (
     <div key={product._id} className="group relative p-4 sm:p-6">
       <div className="rounded-lg overflow-hidden bg-gray-200 aspect-w-1 aspect-h-1 group-hover:opacity-75">
@@ -36,7 +20,7 @@ function ProductCardComponent({
             {product.name}
           </Link>
         </h3>
-        {children}
+        <Rating rating={product.rating} withReview={true} />
         <p className="mt-4 text-base font-medium text-gray-900">
           {product.price} EUR
         </p>
@@ -44,5 +28,3 @@ function ProductCardComponent({
     </div>
   );
 }
-
-export default ProductCard;

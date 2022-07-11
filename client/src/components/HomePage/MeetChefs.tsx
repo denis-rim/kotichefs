@@ -1,10 +1,8 @@
 import React, { useEffect } from "react";
-
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { getPromotedChefs } from "../../store/actions/ChefActionCreators";
-
-import ChefCard from "../ChefCard/ChefCard";
 import Spinner from "../Spinner/Spinner";
+import ChefCardList from "../../modules/common/ChefCard/ChefCardList";
 
 function MeetChefs() {
   const dispatch = useAppDispatch();
@@ -28,9 +26,7 @@ function MeetChefs() {
         </h2>
 
         <div className="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
-          {promotedChefs.map((chef) => (
-            <ChefCard key={chef._id} chef={chef} />
-          ))}
+          <ChefCardList promotedChefs={promotedChefs} />
         </div>
       </div>
     </div>

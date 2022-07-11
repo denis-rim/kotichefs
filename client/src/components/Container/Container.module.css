@@ -1,0 +1,17 @@
+.container {
+  max-width: 80rem;
+  padding-inline: 2rem;
+  margin-inline: auto;
+}
+
+@media screen and (max-width: 1190px) {
+  .container {
+    padding-inline: 1rem;
+  }
+}
+
+@media screen and (max-width: 810px) {
+  .container {
+    padding-inline: 0;
+  }
+}

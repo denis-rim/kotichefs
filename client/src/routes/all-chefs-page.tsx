@@ -5,7 +5,7 @@ import { useAppDispatch, useAppSelector } from "../hooks/redux";
 import { getChefs } from "../store/actions/ChefActionCreators";
 
 import Spinner from "../components/Spinner/Spinner";
-import ChefCard from "../components/ChefCard/ChefCard";
+import ChefCard from "../modules/common/ChefCard/ChefCard";
 
 function AllChefsPage() {
   const dispatch = useAppDispatch();

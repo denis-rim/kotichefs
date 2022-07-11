@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 
-import HomePage from "./routes/home-page";
+import HomePage from "./modules/homepage/home-page";
 import AllChefsPage from "./routes/all-chefs-page";
 import ChefPage from "./routes/chef-page";
 import ProductsPage from "./routes/products-page";

@@ -29,6 +29,14 @@
   color: var(--font-color-light);
 }
 
+.contentContainer span {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  position: absolute;
+}
+
 @media (min-width: 550px) {
   .imageContainer {
     aspect-ratio: 1/1;

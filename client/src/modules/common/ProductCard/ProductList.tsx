@@ -1,13 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Link, Outlet } from "react-router-dom";
-
-import { ProductModel } from "../../models/ProductModel";
-
-import { useAppDispatch, useAppSelector } from "../../hooks/redux";
-import { getAllProductsAction } from "../../store/actions/ProductActionCreators";
-
-import ProductCard from "../ProductCard/ProductCard";
-import Spinner from "../Spinner/Spinner";
+import { ProductModel } from "../../../models/ProductModel";
+import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
+import { getAllProductsAction } from "../../../store/actions/ProductActionCreators";
+import ProductCard from "./ProductCard";
+import Spinner from "../../../components/Spinner/Spinner";
 
 function ProductList() {
   const dispatch = useAppDispatch();
